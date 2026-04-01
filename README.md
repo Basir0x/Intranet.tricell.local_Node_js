@@ -14,7 +14,6 @@ This project demonstrates practical skills in:
 - User authentication & authorization (with middleware)
 - Dynamic HTML template composition
 - File system operations and data management
-- Admin setup and backup utilities
 
 ## Tech Stack
 
