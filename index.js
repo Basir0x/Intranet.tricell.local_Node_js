@@ -1,4 +1,5 @@
-﻿/* ----------------------------- 3:rd party-moduler ------------------------------ */
+﻿//commit 1: Initial commit
+/* ----------------------------- 3:rd party-moduler ------------------------------ */
 const config = require('./config/globals.json');
 const express = require('express');
 const session = require('express-session');
