@@ -1,4 +1,5 @@
-﻿/* ----------------------------- 3:rd party-moduler ------------------------------ */
+﻿/* -----------------------------create kalkylator------------------------------ */
+/* ----------------------------- 3:rd party-moduler ------------------------------ */
 const config = require('./config/globals.json');
 const express = require('express');
 const session = require('express-session');
