@@ -134,188 +134,6 @@ router.get('/', async function(request, response)
     // Inkludera CSS för virusbilder
     response.write(`
     <link rel="stylesheet" href="css/researchobjects.css" />
-    <style>
-        /* Modern Research Database Styling */
-        .research-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 2px solid #3a7542;
-        }
-
-        .research-header h2 {
-            font-size: 28px;
-            font-weight: bold;
-            color: #a8d5a8;
-            margin: 0;
-        }
-
-        .add-research-btn {
-            color: #ffffff;
-            text-decoration: none;
-            font-weight: bold;
-            background-color: #3a7542;
-            border: 1px solid #3a7542;
-            padding: 10px 20px;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-            display: inline-block;
-        }
-
-        .add-research-btn:hover {
-            background-color: #2d5a3d;
-        }
-
-        #table-resp {
-            background: rgba(13, 39, 23, 0.3);
-            border: 1px solid rgba(58, 117, 66, 0.3);
-            border-radius: 8px;
-            overflow: hidden;
-            margin-top: 1.5rem;
-        }
-
-        #table-header {
-            display: grid;
-            grid-template-columns: 80px 1fr 120px 100px 80px 120px 100px repeat(3, 60px);
-            background: linear-gradient(90deg, #1a472a 0%, #0d2717 100%);
-            border-bottom: 2px solid #3a7542;
-            font-weight: bold;
-            color: #a8d5a8;
-            padding: 0;
-        }
-
-        .table-header-cell-light,
-        .table-header-cell-dark {
-            padding: 12px;
-            text-align: center;
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            border-right: 1px solid rgba(58, 117, 66, 0.3);
-        }
-
-        .table-header-cell-light:last-child,
-        .table-header-cell-dark:last-child {
-            border-right: none;
-        }
-
-        .table-body-cell-bigger {
-            text-align: left;
-            padding: 0 12px;
-        }
-
-        #table-body {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .resp-table-row {
-            display: grid;
-            grid-template-columns: 80px 1fr 120px 100px 80px 120px 100px repeat(3, 60px);
-            padding: 0;
-            border-bottom: 1px solid rgba(58, 117, 66, 0.2);
-            align-items: center;
-            color: #d6e8be;
-            transition: background-color 0.3s;
-        }
-
-        .resp-table-row:hover {
-            background-color: rgba(58, 117, 66, 0.2);
-        }
-
-        .table-body-cell {
-            padding: 12px;
-            text-align: center;
-            font-size: 12px;
-            border-right: 1px solid rgba(58, 117, 66, 0.2);
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-        }
-
-        .table-body-cell:last-child {
-            border-right: none;
-        }
-
-        .row-archived {
-            background-color: rgba(100, 100, 100, 0.2) !important;
-            color: #888 !important;
-        }
-
-        .row-archived a {
-            color: #999 !important;
-        }
-
-        .status-badge {
-            display: inline-block;
-            padding: 4px 10px;
-            border-radius: 4px;
-            font-size: 10px;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .status-open {
-            background-color: #3a7542;
-            color: #a8d5a8;
-        }
-
-        .status-archive {
-            background-color: rgba(100, 100, 100, 0.4);
-            color: #999;
-        }
-
-        .action-link {
-            color: #a8d5a8 !important;
-            text-decoration: none;
-            font-weight: bold;
-            padding: 4px 8px;
-            border-radius: 4px;
-            transition: background-color 0.3s;
-        }
-
-        .action-link:hover {
-            background-color: rgba(58, 117, 66, 0.4);
-            color: #ffffff !important;
-        }
-
-        @media (max-width: 1200px) {
-            #table-header,
-            .resp-table-row {
-                grid-template-columns: 70px auto 100px 80px 70px 100px 80px 50px 50px 50px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            #table-header,
-            .resp-table-row {
-                grid-template-columns: auto;
-            }
-
-            .resp-table-row {
-                display: flex;
-                flex-direction: column;
-                border: 1px solid rgba(58, 117, 66, 0.3);
-                margin-bottom: 1rem;
-                border-radius: 8px;
-                padding: 1rem;
-                background: rgba(26, 71, 42, 0.3);
-            }
-
-            .table-header-cell-light,
-            .table-header-cell-dark,
-            .table-body-cell {
-                border: none;
-                padding: 8px 0;
-                text-align: left;
-            }
-        }
-
-        .row-archived { background-color: #e0e0e0 !important; color: #777 !important; }
-        .row-archived a { color: #666 !important; text-decoration: none !important; }
-    </style>
     `);
 
     if(request.session.loggedin) {
@@ -380,22 +198,22 @@ router.get('/', async function(request, response)
             const statusText = (virusList[i].objectStatus === 'archive') ? 'ARCHIVED' : 'OPEN';
 
             response.write(`<div class="resp-table-row ${archiveClass}">
-                <div class="table-body-cell">${virusList[i].objectNumber}</div>
-                <div class="table-body-cell-bigger"><a href="/api/virusdatabase/${virusList[i].ID}" style="color:#336699;">${virusList[i].objectName}</a></div>
-                <div class="table-body-cell">${virusList[i].objectCreatedDate}</div>
-                <div class="table-body-cell">${virusList[i].objectCreator}</div>
-                <div class="table-body-cell">${entryCount || 0}</div>
-                <div class="table-body-cell">${lastEntryDate || '-'}</div>
-                <div class="table-body-cell"><span class="status-badge ${statusClass}">${statusText}</span></div>`);
+                <div class="table-body-cell" data-label="Number"><span>${virusList[i].objectNumber}</span></div>
+                <div class="table-body-cell-bigger" data-label="Name"><span><a href="/api/virusdatabase/${virusList[i].ID}" style="color:#8bc2a8;">${virusList[i].objectName}</a></span></div>
+                <div class="table-body-cell" data-label="Created"><span>${virusList[i].objectCreatedDate}</span></div>
+                <div class="table-body-cell" data-label="By"><span>${virusList[i].objectCreator}</span></div>
+                <div class="table-body-cell" data-label="Entries"><span>${entryCount || 0}</span></div>
+                <div class="table-body-cell" data-label="Last entry"><span>${lastEntryDate || '-'}</span></div>
+                <div class="table-body-cell" data-label="Status"><span class="status-badge ${statusClass}">${statusText}</span></div>`);
             
             if (request.session.loggedin) {
-                response.write(`<div class="table-body-cell"><a href="/api/virusdatabase/edit/${virusList[i].ID}" class="action-link">E</a></div>
-                               <div class="table-body-cell"><a href="/api/virusdatabase/delete/${virusList[i].ID}" class="action-link">D</a></div>`);
+                response.write(`<div class="table-body-cell" data-label="Edit"><span><a href="/api/virusdatabase/edit/${virusList[i].ID}" class="action-link">E</a></span></div>
+                               <div class="table-body-cell" data-label="Delete"><span><a href="/api/virusdatabase/delete/${virusList[i].ID}" class="action-link">D</a></span></div>`);
                 
                 // Visa Archive/Open-knapp 
                 if (request.session.securityAccessLevel === 'A') {
                     const toggleText = virusList[i].objectStatus === 'archive' ? 'Open' : 'Archive';
-                    response.write(`<div class="table-body-cell"><a href="/api/virusdatabase/toggle/${virusList[i].ID}" class="action-link" style="color:#ff9800;">${toggleText}</a></div>`);
+                    response.write(`<div class="table-body-cell" data-label="Archive/Open"><span><a href="/api/virusdatabase/toggle/${virusList[i].ID}" class="action-link" style="color:#ff9800;">${toggleText}</a></span></div>`);
                 }
             }
             response.write('</div>\n');

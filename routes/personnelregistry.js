@@ -55,38 +55,32 @@ router.get('/', (request, response) =>
         response.write(htmlInfoStart);
 
         // Skapa HTML-textsträng för tabellen för utskrift av XML-data
-        let htmlOutput =""+
-        "<link rel=\"stylesheet\" href=\"css/personnel_registry.css\" \/>";
+        let htmlOutput = "" +
+            "<link rel=\"stylesheet\" href=\"css/personnel_registry.css\" />" +
+            "<div class=\"page-header\">" +
+            "<h2>Personnel Registry</h2>";
 
-        if(request.session.loggedin)
-        {
-            htmlOutput +="<table border=\"0\">";
-            htmlOutput +="<tr><td width=\"350\" align=\"left\">";
-            htmlOutput +="<h2>Personnel Registry:</h2>\n";
-            htmlOutput +="</td><td width=\"350\" align=\"right\">";
-            htmlOutput +="<a href=\"/api/newemployee\" style=\"color:#336699;text-decoration:none;\">Add new employee</a>";
-            htmlOutput +="</td></tr></table>";
-        }
-        else
-        {
-            htmlOutput +="<h2>Personnel Registry:</h2>\n";
+        if (request.session.loggedin) {
+            htmlOutput += "<a href=\"/api/newemployee\" class=\"action-btn\">➕ Add new employee</a>";
         }
 
-        htmlOutput +="<div id=\"table-resp\">"+
-        "<div id=\"table-header\">\n"+
-        "<div class=\"table-header-cell-light\">Employee Code</div>\n"+
-        "<div class=\"table-header-cell-dark\">Name</div>\n"+
-        "<div class=\"table-header-cell-light\">Signature Date</div>\n"+
-        "<div class=\"table-header-cell-light\">Rank</div>\n"+
-        "<div class=\"table-header-cell-light\">Access Level</div>\n";
-        if(request.session.loggedin)
-        {
-            htmlOutput +="<div class=\"table-header-cell-light\">Edit</div>\n"+
-            "<div class=\"table-header-cell-light\">Delete</div>\n";
+        htmlOutput += "</div>";
+
+        htmlOutput += "<div id=\"table-resp\">" +
+            "<div id=\"table-header\">\n" +
+            "<div class=\"table-header-cell-light\">Employee Code</div>\n" +
+            "<div class=\"table-header-cell-dark\">Name</div>\n" +
+            "<div class=\"table-header-cell-light\">Signature Date</div>\n" +
+            "<div class=\"table-header-cell-light\">Rank</div>\n" +
+            "<div class=\"table-header-cell-light\">Access Level</div>\n";
+
+        if (request.session.loggedin) {
+            htmlOutput += "<div class=\"table-header-cell-light\">Edit</div>\n" +
+                "<div class=\"table-header-cell-light\">Delete</div>\n";
         }
-        htmlOutput +="</div>\n\n"+
-        "<div id=\"table-body\">\n";
-        "";
+
+        htmlOutput += "</div>\n\n" +
+            "<div id=\"table-body\">\n";
 
         // Skicka SQL-query till databasen och läs in variabler
         const result = await connection.query('SELECT id, employeeCode, name, signatureDate, rank, securityAccessLevel FROM employee');
@@ -107,15 +101,15 @@ router.get('/', (request, response) =>
                          
             // Lägg till respektive employee till utskrift-variabeln
             htmlOutput += "<div class=\"resp-table-row\">\n";
-            htmlOutput += "<div class=\"table-body-cell\">" + str_employeeCode + "</div>\n";
-            htmlOutput += "<div class=\"table-body-cell-bigger\"><a href=\"/api/personnelregistry/" + str_employeeCode + "\">" + str_name + "</a></div>\n";
-            htmlOutput += "<div class=\"table-body-cell\"> " + str_signatureDate + "</div>\n";
-            htmlOutput += "<div class=\"table-body-cell\"> " + str_rank + "</div>\n";
-            htmlOutput += "<div class=\"table-body-cell\"> " + str_securityAccessLevel + "</div>\n";
+            htmlOutput += "<div class=\"table-body-cell\" data-label=\"Employee Code\"><span>" + str_employeeCode + "</span></div>\n";
+            htmlOutput += "<div class=\"table-body-cell-bigger\" data-label=\"Name\"><span><a href=\"/api/personnelregistry/" + str_employeeCode + "\">" + str_name + "</a></span></div>\n";
+            htmlOutput += "<div class=\"table-body-cell\" data-label=\"Signature Date\"><span>" + str_signatureDate + "</span></div>\n";
+            htmlOutput += "<div class=\"table-body-cell\" data-label=\"Rank\"><span>" + str_rank + "</span></div>\n";
+            htmlOutput += "<div class=\"table-body-cell\" data-label=\"Access Level\"><span>" + str_securityAccessLevel + "</span></div>\n";
             if(request.session.loggedin)
             {
-                htmlOutput += "<div class=\"table-body-cell\"><a href=\"/api/editemployee/" + str_id + "\" style=\"color:#336699;text-decoration:none;\">E</a></div>\n";
-                htmlOutput += "<div class=\"table-body-cell\"><a href=\"/api/deleteemployee/" + str_id + "\" style=\"color:#336699;text-decoration:none;\">D</a></div>\n";
+                htmlOutput += "<div class=\"table-body-cell\" data-label=\"Edit\"><span><a href=\"/api/editemployee/" + str_id + "\" class=\"action-link\">E</a></span></div>\n";
+                htmlOutput += "<div class=\"table-body-cell\" data-label=\"Delete\"><span><a href=\"/api/deleteemployee/" + str_id + "\" class=\"action-link\">D</a></span></div>\n";
             }
             htmlOutput += "</div>\n";
         }  
@@ -183,45 +177,49 @@ router.get('/:employeeid', function(request, response)
         str_strengths = result[0]['strengths'];
         str_weaknesses = result[0]['weaknesses'];
 
-         // Skapa HTML-textsträng för tabellen för utskrift av XML-data
-        let htmlOutput =""+
-        "<link rel=\"stylesheet\" href=\"css/personnel_registry_employee.css\" \/>\n"+ 
-        "<h1>Personnel Registry - " + employeeid + "</h1>\n"+
-        "<table id=\"infomiddle\">\n"+
-        "<tr><td width=\"166\" valign=\"top\">\n"+
-             "<table id=\"photocol\"><tr><td id=\"photobox\"><img src=\"photos/" + str_employeeCode + ".jpg\" alt=\"" + str_employeeCode + "\" width=\"164\" /></td></tr><tr><td class=\"tablespacer\"></tr>\n"+
-            "<tr><td id=\"employeecode\">EMPLOYEE CODE: </b><br /><b>" + str_employeeCode + "</b></td></tr><tr><td class=\"tablespacer\"></tr>\n"+
-            "<tr> <td id=\"securitylevel\">SECURITY CLEARANCE LEVEL: </b><br /><big><big><big>" +str_securityAccessLevel+ "</big></big></big></td></tr></table>\n"+
-        "</td><td width=\"135\" valign=\"top\">\n"+
-             "<table><tr><td class=\"variablecol\">NAME: &nbsp;</td></tr><tr><td class=\"tablespacer\"></tr>\n"+
-            "<tr><td class=\"variablecol\">DATE OF BIRTH: &nbsp;</td></tr><tr><td class=\"tablespacer\"></tr>\n"+
-            "<tr><td class=\"variablecol\">SEX: &nbsp;</td></tr><tr><td class=\"tablespacer\"></tr>\n"+
-            "<tr><td class=\"variablecol\">BLOOD TYPE: &nbsp;</td></tr><tr><td class=\"tablespacer\"></tr>\n"+
-            "<tr><td class=\"variablecol\">HEIGHT: &nbsp;</td></tr><tr><td class=\"tablespacer\"></tr>\n"+
-            "<tr><td class=\"variablecol\">WEIGHT: &nbsp;</td></tr><tr><td class=\"tablespacer\"></tr>\n"+
-            "<tr><td class=\"variablecol\">DEPARTMENT: &nbsp;</td></tr><tr><td class=\"tablespacer\"></tr>\n"+
-            "<tr><td class=\"variablecol\">RANK: &nbsp;</td></tr><tr><td class=\"tablespacer\"></tr></table>\n"+
-        "</td><td width=\"245\" valign=\"top\">\n"+
-             "<table><tr><td class=\"valuecol\">" +str_name+ "</td></tr><tr><td class=\"blackline\"></td></tr><tr><td class=\"tablespacer\"></tr>\n"+
-            "<tr><td class=\"valuecol\">" +str_dateOfBirth+ "</div></td></tr><tr><td class=\"blackline\"></td></tr><tr><td class=\"tablespacer\"></tr>\n"+
-            "<tr><td class=\"valuecol\">" +str_sex+ "</td></tr><tr><td class=\"blackline\"></td></tr><tr><td class=\"tablespacer\"></tr>\n"+
-            "<tr><td class=\"valuecol\">" +str_bloodType+ "</td></tr><tr><td class=\"blackline\"></td></tr><tr><td class=\"tablespacer\"></tr>\n"+
-            "<tr><td class=\"valuecol\">" +str_height+ "</td></tr><tr><td class=\"blackline\"></td></tr><tr><td class=\"tablespacer\"></tr>\n"+
-            "<tr><td class=\"valuecol\">" +str_weight+ "</td></tr><tr><td class=\"blackline\"></td></tr><tr><td class=\"tablespacer\"></tr>\n"+
-            "<tr><td class=\"valuecol\">" +str_department+ "</td></tr><tr><td class=\"blackline\"></td></tr><tr><td class=\"tablespacer\"></tr>\n"+
-            "<tr><td class=\"valuecol\">" +str_rank+ "</td></tr><tr><td class=\"blackline\"></td></tr><tr><td class=\"tablespacer\"></tr></table>\n"+
-            "<td width=\"182\" valign=\"top\">\n"+
-            "</td>\n"+
-        "</td></tr></table>\n";  
+         // Skapa HTML-textsträng för profilsidan
+        let htmlOutput = "" +
+            "<link rel=\"stylesheet\" href=\"css/personnel_registry_employee.css\" />" +
+            "<div class=\"profile-page\">" +
+            "<div class=\"profile-header\">" +
+            "<h2>Personnel Profile - " + str_name + "</h2>" +
+            "<a href=\"/api/personnelregistry\" class=\"action-btn\">← Back to Registry</a>" +
+            "</div>" +
+            "<div class=\"profile-grid\">" +
+            "<div class=\"profile-card\">" +
+            "<img class=\"profile-photo\" src=\"photos/" + str_employeeCode + ".jpg\" alt=\"" + str_name + "\" />" +
+            "<div class=\"profile-meta\">" +
+            "<div class=\"profile-meta-item\"><span>Employee Code</span>" + str_employeeCode + "</div>" +
+            "<div class=\"profile-meta-item\"><span>Security Level</span>" + str_securityAccessLevel + "</div>" +
+            "<div class=\"profile-meta-item\"><span>Signature Date</span>" + str_signatureDate + "</div>" +
+            "</div>" +
+            "</div>" +
+            "<div class=\"profile-card\">" +
+            "<div class=\"detail-row\">" +
+            "<div class=\"detail-block\"><h3>Name</h3><div class=\"detail-value\">" + str_name + "</div></div>" +
+            "<div class=\"detail-block\"><h3>Rank</h3><div class=\"detail-value\">" + str_rank + "</div></div>" +
+            "</div>" +
+            "<div class=\"detail-row\">" +
+            "<div class=\"detail-block\"><h3>Date of Birth</h3><div class=\"detail-value\">" + str_dateOfBirth + "</div></div>" +
+            "<div class=\"detail-block\"><h3>Sex</h3><div class=\"detail-value\">" + str_sex + "</div></div>" +
+            "</div>" +
+            "<div class=\"detail-row\">" +
+            "<div class=\"detail-block\"><h3>Blood Type</h3><div class=\"detail-value\">" + str_bloodType + "</div></div>" +
+            "<div class=\"detail-block\"><h3>Height</h3><div class=\"detail-value\">" + str_height + "</div></div>" +
+            "</div>" +
+            "<div class=\"detail-row\">" +
+            "<div class=\"detail-block\"><h3>Weight</h3><div class=\"detail-value\">" + str_weight + "</div></div>" +
+            "<div class=\"detail-block\"><h3>Department</h3><div class=\"detail-value\">" + str_department + "</div></div>" +
+            "</div>" +
+            "</div>" +
+            "</div>" +
+            "<div class=\"profile-card profile-section\">" +
+            "<div class=\"profile-section\"><h3>Background</h3><p>" + (str_background || 'No background data available.') + "</p></div>" +
+            "<div class=\"profile-section\"><h3>Strengths</h3><p>" + (str_strengths || 'No strengths listed.') + "</p></div>" +
+            "<div class=\"profile-section\"><h3>Weaknesses</h3><p>" + (str_weaknesses || 'No weaknesses listed.') + "</p></div>" +
+            "</div>" +
+            "</div>";
 
-        htmlOutput =htmlOutput +
-        "<h1>Background</h1>\n"+ str_background +
-        "<p />"+
-        "<h1>Strengths</h1>\n"+ str_strengths +
-        "<p />"+
-        "<h1>Weaknesses</h1>\n"+ str_weaknesses +
-        "<p />";
-    
         response.write(htmlOutput); // Skriv ut 
 
         response.write(htmlInfoStop);

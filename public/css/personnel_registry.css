@@ -1,99 +1,184 @@
-/* ==================== ACTIVITY LOG TABLE ==================== */
+/* Personnel registry listing styles */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid #3a7542;
+  padding-bottom: 0.75rem;
+}
+.page-header h2 {
+  font-size: 24px;
+  color: #a8d5a8;
+  margin: 0;
+}
+.page-header .action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #3a7542;
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 6px;
+  border: 1px solid #3a7542;
+  text-decoration: none;
+  font-weight: 700;
+  transition: background 0.2s ease;
+}
+.page-header .action-btn:hover {
+  background: #2d5a3d;
+}
 
 #table-resp {
-    width: 100%;
-    max-width: 1200px;
-    display: table;
-    border-collapse: collapse;
-    background: #1a1a1a;
-    border: 1px solid #444;
-    border-radius: 8px;
-    overflow: hidden;
-    font-size: 14px;
-    font-family: Arial, Helvetica, sans-serif;
-    color: #ddd;
-    margin-top: 10px;
+  width: 100%;
+  max-width: 1200px;
+  margin-top: 1rem;
+  display: table;
+  border-collapse: collapse;
+  background: rgba(13, 39, 23, 0.85);
+  border: 1px solid rgba(58, 117, 66, 0.4);
+  border-radius: 12px;
+  overflow: hidden;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #d6e8be;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.25);
 }
 
 #table-header {
-    display: table-header-group;
-    background: #222;
+  display: table-header-group;
+  background: linear-gradient(90deg, #1e3d26 0%, #122712 100%);
 }
 
 #table-header > div {
-    display: table-cell;
-    padding: 14px 10px;
-    font-weight: bold;
-    text-align: center;
-    border-bottom: 2px solid #555;
+  display: table-cell;
+  padding: 14px 12px;
+  text-align: center;
+  font-weight: 700;
+  color: #c6e2c5;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  border-right: 1px solid rgba(58, 117, 66, 0.35);
 }
 
-/* Header Colors */
-.table-header-cell-light {
-    background-color: #2a2a2a;
-    color: #b0dfdf;
+#table-header > div:last-child {
+  border-right: none;
 }
 
 .table-header-cell-dark {
-    background-color: #1f5c5c;
-    color: white;
+  background: rgba(48, 81, 56, 0.95);
 }
 
-/* Rows */
+.table-header-cell-light {
+  background: rgba(26, 47, 29, 0.95);
+}
+
 #table-body {
-    display: table-row-group;
+  display: table-row-group;
 }
 
 .resp-table-row {
-    display: table-row;
-    border-bottom: 1px solid #333;
+  display: table-row;
+  border-bottom: 1px solid rgba(58, 117, 66, 0.18);
+  background: rgba(8, 18, 11, 0.95);
 }
 
 .resp-table-row:hover {
-    background-color: rgba(255, 255, 255, 0.08);
+  background: rgba(58, 117, 66, 0.12);
 }
 
-/* Cells */
 .table-body-cell,
 .table-body-cell-bigger {
-    display: table-cell;
-    padding: 12px 10px;
-    text-align: center;
-    vertical-align: middle;
-    border-right: 1px solid #333;
+  display: table-cell;
+  padding: 14px 12px;
+  text-align: center;
+  vertical-align: middle;
+  border-right: 1px solid rgba(58, 117, 66, 0.18);
+  word-break: break-word;
 }
 
-/* Last column no border */
 .table-body-cell:last-child,
 #table-header > div:last-child {
-    border-right: none;
+  border-right: none;
 }
 
-/* Specific column styling */
 .table-body-cell-bigger {
-    text-align: left;
-    font-weight: 500;
-    color: #fff;
-    background-color: #252525;
+  text-align: left;
+  color: #fff;
 }
 
-/* Delete link */
-.table-body-cell a {
-    color: #ff4444;
-    font-weight: bold;
-    text-decoration: none;
+.table-body-cell a,
+.table-body-cell-bigger a {
+  color: #8bc2a8;
+  text-decoration: none;
+  font-weight: 700;
 }
 
-.table-body-cell a:hover {
-    color: #ff6666;
-    text-decoration: underline;
+.table-body-cell a:hover,
+.table-body-cell-bigger a:hover {
+  color: #daf5d8;
 }
 
-/* Make table responsive on small screens */
+.table-body-cell .action-link {
+  display: inline-block;
+  padding: 6px 10px;
+  border-radius: 5px;
+  background: rgba(58, 117, 66, 0.1);
+  text-decoration: none;
+}
+
+.table-body-cell .action-link:hover {
+  background: rgba(58, 117, 66, 0.25);
+}
+
 @media (max-width: 900px) {
-    #table-resp {
-        display: block;
-        overflow-x: auto;
-        white-space: nowrap;
-    }
+  #table-resp {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 720px) {
+  #table-resp,
+  #table-body,
+  #table-header,
+  .resp-table-row {
+    display: block;
+  }
+
+  #table-header {
+    display: none;
+  }
+
+  .resp-table-row {
+    border: 1px solid rgba(58,117,66,0.25);
+    border-radius: 12px;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background: rgba(15, 34, 18, 0.95);
+  }
+
+  .table-body-cell,
+  .table-body-cell-bigger {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border: none;
+    text-align: left;
+  }
+
+  .table-body-cell::before,
+  .table-body-cell-bigger::before {
+    content: attr(data-label);
+    color: #a8d5a8;
+    font-weight: 700;
+    margin-right: 1rem;
+    flex: 0 0 40%;
+  }
+
+  .table-body-cell span,
+  .table-body-cell-bigger span {
+    flex: 1;
+    text-align: right;
+  }
 }
