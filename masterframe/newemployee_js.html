@@ -1,0 +1,103 @@
+<script language="JavaScript">
+function formCheckNewEmployee()
+{
+	if(document.newemployeeform.femployeecode.value=="" || document.newemployeeform.femployeecode.value.indexOf("-") == -1)
+	{
+       		alert("Employee Code is required and must be in format XX-XXX");
+	        return false;
+	}
+	if(document.newemployeeform.fname.value=="")
+	{
+       		alert("Employee name is required!");
+	        return false;
+	}
+    if(document.newemployeeform.fbloodtype.value=="")	
+    { 
+        alert("Blood type is required (e.g., O+)!"); 
+        return false; 
+    }
+	if(document.newemployeeform.fheight.value=="" || document.newemployeeform.fheight.value.indexOf("cm") == -1)	
+    { 
+        alert("Height is required and must include 'cm' (e.g., 180cm)!"); 
+        return false; 
+    }
+	if(document.newemployeeform.fweight.value=="" || document.newemployeeform.fweight.value.indexOf("kg") == -1)	
+    { 
+        alert("Weight is required and must include 'kg' (e.g., 75kg)!"); 
+        return false; 
+    }
+	if(document.newemployeeform.fdepartment.value=="")	
+    { 
+        alert("Department is required!"); 
+        return false; 
+    }
+	if(document.newemployeeform.frank.value=="")	
+    { 
+        alert("Rank/Job title is required!"); 
+        return false; 
+    }
+	if(document.newemployeeform.fbackground.value=="")	
+    { 
+        alert("Background information is required!"); 
+        return false; 
+    }
+	if(document.newemployeeform.fstrengths.value=="")	
+    { 
+        alert("Strengths are required!"); 
+        return false; 
+    }
+	if(document.newemployeeform.fweaknesses.value=="")	
+    { 
+        alert("Weaknesses are required!"); 
+        return false; 
+    }
+	
+    var temp = document.newemployeeform.ffile.value;
+	var filename = temp.substring(temp.lastIndexOf('\\')+1,temp.length);
+	
+    if(temp!="")
+	{
+		if (temp.substring(temp.lastIndexOf("."),temp.length) != ".jpg")
+	        {
+	       		alert("Only JPG format is accepted for photos!");
+		        return false;
+	        }
+		if (filename.indexOf(' ') != -1)
+	        {
+       			alert("Filename cannot contain spaces!");
+	        	return false;
+	        }
+		if (filename.indexOf('ä') != -1 || filename.indexOf('å') != -1 || filename.indexOf('ö') != -1)
+        	{
+	       		alert("Filename cannot contain special characters (ä, å, ö)!");
+		        return false;
+	        }
+		if (filename.indexOf('Å') != -1 || filename.indexOf('Ä') != -1 || filename.indexOf('Ö') != -1)
+	        {
+	       		alert("Filename cannot contain special characters (Å, Ä, Ö)!");
+		        return false;
+	        }
+	}
+    
+    return true;
+}
+
+// Photo preview functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const fileInput = document.getElementById('ffile');
+    const photoPreview = document.getElementById('photoPreview');
+    
+    if (fileInput && photoPreview) {
+        fileInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    photoPreview.src = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    }
+});
+</script>

@@ -1,0 +1,167 @@
+/* Horizontal Top Navigation */
+.navbar {
+    background: linear-gradient(90deg, #020805 0%, #0d2717 100%) !important;
+    border-bottom: 2px solid #3a7542;
+    padding: 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.navbar-brand {
+    font-size: 20px;
+    font-weight: bold;
+    color: #a8d5a8 !important;
+    margin-right: 40px;
+}
+
+.navbar-brand:hover {
+    color: #d6e8be !important;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: #d6e8be !important;
+    padding: 12px 20px !important;
+    font-size: 14px;
+    transition: color 0.3s;
+}
+
+.navbar-dark .navbar-nav .nav-link:hover {
+    color: #ffffff !important;
+}
+
+.navbar-dark .navbar-nav .nav-link.active {
+    color: #a8d5a8 !important;
+    border-bottom: 2px solid #a8d5a8;
+    padding-bottom: 10px !important;
+}
+
+.navbar-dark .navbar-nav .dropdown-toggle::after {
+    border-bottom: 0.3em solid transparent;
+    border-left: 0.3em solid transparent;
+    border-right: 0.3em solid transparent;
+    border-top: 0.3em solid #a8d5a8;
+    margin-left: 0.5em;
+}
+
+.dropdown-menu {
+    background-color: rgba(13, 39, 23, 0.95) !important;
+    border: 1px solid #3a7542 !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+}
+
+.dropdown-item {
+    color: #d6e8be !important;
+    padding: 10px 20px !important;
+    font-size: 13px;
+    transition: background-color 0.3s;
+}
+
+.dropdown-item:hover {
+    background-color: rgba(58, 117, 66, 0.3) !important;
+    color: #ffffff !important;
+}
+
+.dropdown-item.active,
+.dropdown-item:active {
+    background-color: rgba(58, 117, 66, 0.5) !important;
+}
+
+.navbar-toggler {
+    border-color: #a8d5a8 !important;
+    margin-right: 15px;
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%23a8d5a8' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+}
+
+/* Right Sidebar - Logged In Menu */
+.sidebar 
+{
+	height: 100%;
+	width: 0;
+	position: fixed;
+	z-index: 3;
+	top: 0;
+	right: 0;
+	background: linear-gradient(180deg, #1a472a 0%, #0d2717 100%);
+	overflow-x: hidden;
+	transition: 0.5s;
+	padding-top: 20px;
+	border-left: 2px solid #3a7542;
+}
+
+.sidebar a 
+{
+	padding: 12px 20px;
+	text-decoration: none;
+	color: #d6e8be;
+	display: block;
+	transition: 0.3s;
+}
+
+.sidebar a:hover 
+{
+	color: #ffffff;
+	background-color: rgba(58, 117, 66, 0.3);
+}
+
+.sidebar .closemenubutton
+{
+	position: absolute;
+	top: 15px;
+	left: 20px;
+	font-size: 28px;
+	cursor: pointer;
+	color: #a8d5a8;
+	transition: 0.3s;
+}
+
+.sidebar .closemenubutton:hover
+{
+	color: #ffffff;
+}
+
+#menubuttoncontainer
+{
+	position: absolute;
+	z-index: 2;
+	right: 0px;
+	top: 0px;
+}
+
+.openmenubutton 
+{
+	font-size: 14px;
+	cursor: pointer;
+	background-color: #2d5a3d;
+	color: #a8d5a8;
+	padding: 10px 15px;
+	border: 1px solid #3a7542;
+	border-radius: 4px;
+	transition: background-color 0.3s;
+}
+
+.openmenubutton:hover 
+{
+ 	background-color: #3a7542;
+ 	color: #ffffff;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .navbar-brand {
+        font-size: 16px;
+        margin-right: 20px;
+    }
+
+    .navbar-dark .navbar-nav .nav-link {
+        padding: 10px 15px !important;
+        font-size: 13px;
+    }
+
+    .dropdown-item {
+        padding: 8px 15px !important;
+        font-size: 12px;
+    }
+}

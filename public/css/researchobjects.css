@@ -1,0 +1,42 @@
+/* Research Objects list and form styles */
+.research-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;padding-bottom:0.5rem;border-bottom:2px solid #3a7542}
+.research-header h2{font-size:24px;font-weight:700;color:#a8d5a8;margin:0}
+.add-research-btn{color:#fff;text-decoration:none;font-weight:700;background:#3a7542;border:1px solid #3a7542;padding:8px 14px;border-radius:5px}
+.add-research-btn:hover{background:#2d5a3d}
+
+#table-resp{background:rgba(13,39,23,0.3);border:1px solid rgba(58,117,66,0.3);border-radius:8px;overflow:hidden;margin-top:1rem}
+#table-header{display:grid;grid-template-columns:80px 1fr 120px 100px 80px 120px 100px 60px 60px 60px;background:linear-gradient(90deg,#1a472a 0%,#0d2717 100%);border-bottom:2px solid #3a7542;font-weight:700;color:#a8d5a8;padding:0}
+.table-header-cell-light,.table-header-cell-dark{padding:10px;text-align:center;font-size:12px;text-transform:uppercase;letter-spacing:0.5px;border-right:1px solid rgba(58,117,66,0.25)}
+.table-header-cell-light:last-child,.table-header-cell-dark:last-child{border-right:none}
+
+#table-body{display:flex;flex-direction:column}
+.resp-table-row{display:grid;grid-template-columns:80px 1fr 120px 100px 80px 120px 100px 60px 60px 60px;padding:0;border-bottom:1px solid rgba(58,117,66,0.12);align-items:center;color:#d6e8be}
+.resp-table-row:hover{background:rgba(58,117,66,0.12)}
+.table-body-cell{padding:12px;text-align:center;font-size:12px;border-right:1px solid rgba(58,117,66,0.12);word-wrap:break-word;overflow-wrap:break-word}
+.table-body-cell:last-child{border-right:none}
+.table-body-cell-bigger{text-align:left;padding:0 12px}
+.row-archived{background-color:rgba(100,100,100,0.12)!important;color:#888!important}
+.row-archived a{color:#999!important}
+
+.status-badge{display:inline-block;padding:4px 10px;border-radius:4px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px}
+.status-open{background:#3a7542;color:#a8d5a8}
+.status-archive{background:rgba(100,100,100,0.4);color:#999}
+.action-link{color:#a8d5a8!important;text-decoration:none;font-weight:700;padding:4px 8px;border-radius:4px;transition:background-color 0.2s}
+.action-link:hover{background:rgba(58,117,66,0.35);color:#fff!important}
+
+/* Mobile collapse to cards */
+@media (max-width:768px){
+  #table-header,.resp-table-row{grid-template-columns:auto}
+  .resp-table-row{display:flex;flex-direction:column;border:1px solid rgba(58,117,66,0.2);margin:0.5rem;border-radius:8px;padding:1rem;background:rgba(26,71,42,0.12)}
+  .table-header-cell-light,.table-header-cell-dark,.table-body-cell{border:none;padding:8px 0;text-align:left}
+}
+
+/* Form container defaults (used if inline styles removed) */
+.research-form{max-width:900px;margin:1.5rem auto;padding:1.5rem;background:rgba(13,39,23,0.5);border:1px solid rgba(58,117,66,0.3);border-radius:12px;display:flex;flex-direction:column;gap:1rem}
+.research-form label{font-size:12px;font-weight:700;color:#a8d5a8;text-transform:uppercase}
+.research-form input[type="text"],.research-form textarea{width:100%;padding:10px;border:1px solid #3a7542;background:rgba(13,39,23,0.8);color:#d6e8be;border-radius:4px}
+.research-form textarea{min-height:160px}
+.research-form .form-actions{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:0.5rem}
+.research-form .btn{padding:10px 16px;border-radius:5px;border:none}
+.research-form .btn-primary{background:#3a7542;color:#fff}
+.research-form .btn-secondary{background:rgba(58,117,66,0.2);color:#d6e8be;border:1px solid #3a7542}

@@ -1,0 +1,160 @@
+<div class="page-section">
+    <h1 class="section-title">Add New Employee</h1>
+    
+    <form name="newemployeeform" action="/api/newemployee" onSubmit="return formCheckNewEmployee()" method="post" enctype="multipart/form-data" class="employee-form">
+        <input type="hidden" name="MAX_FILE_SIZE" value="50000000" />
+        <input type="hidden" name="fsignaturedate" value="" />
+
+        <div class="form-container">
+            <!-- Left Column: Photo and Security Info -->
+            <div class="form-column form-column-photo">
+                <div class="photo-section">
+                    <div class="photo-box">
+                        <img src="images/default.jpg" alt="Employee Photo" id="photoPreview" />
+                    </div>
+                    <label class="file-upload-label">
+                        <input type="file" name="ffile" id="ffile" class="file-input" />
+                        <span class="upload-text">Upload Photo (JPG)</span>
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <label>EMPLOYEE CODE:</label>
+                    <input type="text" name="femployeecode" id="femployeecode" maxlength="7" placeholder="Format: XX-XXX" />
+                </div>
+
+                <div class="form-group">
+                    <label>SECURITY CLEARANCE:</label>
+                    <select name="fsecurityaccess" id="fsecurityaccess" class="form-control">
+                        <option value="C" selected>C - Standard</option>
+                        <option value="B">B - High</option>
+                        <option value="A">A - Top Secret</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Right Column: Employee Details -->
+            <div class="form-column form-column-details">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>NAME:</label>
+                        <input type="text" name="fname" id="fname" maxlength="255" placeholder="Full name" />
+                    </div>
+                    <div class="form-group">
+                        <label>DATE OF BIRTH:</label>
+                        <input type="date" name="fdateofbirth" id="fdateofbirth" />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>SEX:</label>
+                        <select name="fsex" id="fsex" class="form-control">
+                            <option value="Male" selected>Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>BLOOD TYPE:</label>
+                        <input type="text" name="fbloodtype" id="fbloodtype" maxlength="5" placeholder="e.g., O+" />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>HEIGHT:</label>
+                        <input type="text" name="fheight" id="fheight" maxlength="10" placeholder="e.g., 180cm" />
+                    </div>
+                    <div class="form-group">
+                        <label>WEIGHT:</label>
+                        <input type="text" name="fweight" id="fweight" maxlength="10" placeholder="e.g., 75kg" />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>DEPARTMENT:</label>
+                        <input type="text" name="fdepartment" id="fdepartment" maxlength="100" placeholder="Department name" />
+                    </div>
+                    <div class="form-group">
+                        <label>RANK:</label>
+                        <input type="text" name="frank" id="frank" maxlength="100" placeholder="Job title/rank" />
+                    </div>
+                </div>
+
+                <div class="form-group full-width">
+                    <label>BACKGROUND:</label>
+                    <textarea name="fbackground" id="fbackground" placeholder="Employee background and history"></textarea>
+                </div>
+
+                <div class="form-group full-width">
+                    <label>STRENGTHS:</label>
+                    <textarea name="fstrengths" id="fstrengths" placeholder="Key strengths and skills"></textarea>
+                </div>
+
+                <div class="form-group full-width">
+                    <label>WEAKNESSES:</label>
+                    <textarea name="fweaknesses" id="fweaknesses" placeholder="Areas for improvement"></textarea>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Add Employee</button>
+                    <button type="reset" class="btn btn-secondary">Clear Form</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<tr>
+<td class="valuecol"><input type="text" name="fbloodtype" id="fbloodtype" size="7" maxlength="4"  /></td>
+</tr>
+<tr><td class="blackline"></td></tr>
+<tr><td class="tablespacer"></tr>
+<tr>
+<td class="valuecol"><input type="text" name="fheight" id="fheight" size="7"  maxlength="7" /></td>
+</tr>
+<tr><td class="blackline"></td></tr>
+<tr><td class="tablespacer"></tr>
+<tr>
+<td class="valuecol"><input type="text" name="fweight" id="fweight" size="7"  maxlength="7" /></td>
+</tr>
+<tr><td class="blackline"></td></tr>
+<tr><td class="tablespacer"></tr>
+<tr>
+<td class="valuecol"><input type="text" name="fdepartment" id="fdepartment" size="20" value="Medical Data Department" maxlength="255"/></td>
+</tr>
+<tr><td class="blackline"></td></tr>
+<tr><td class="tablespacer"></tr>
+<tr>
+<td class="valuecol"><input type="text" name="frank" id="frank" size="20" value="Junior Data Analyst" maxlength="255" /></td>
+</tr>
+<tr><td class="blackline"></td></tr>
+<tr><td class="tablespacer"></tr>
+</table>
+<!-- Inre-tabell Värden slut -->
+
+<td width="182" valign="top">
+
+<!-- Inre-tabell Tom start -->
+<!-- Inre-tabell Tom slut -->
+
+</td>
+</tr>
+</table>
+<!-- Mellan-tabell slut -->
+
+
+<br /><p />
+<h1>Background:</h1>
+<textarea rows="5" cols="45" name="fbackground" id="fbackground" wrap="off"></textarea>
+<p />
+<h1>Strengths:</h1>
+<textarea rows="5" cols="45" name="fstrengths" id="fstrengths" wrap="off"></textarea>
+<p />
+<h1>Weaknesses:</h1>
+<textarea rows="5" cols="45" name="fweaknesses" id="fweaknesses" wrap="off"></textarea>
+<p />
+<input type="submit" class="button" value="Add New Employee" /><input class="button" type="reset" value="Reset Form" />
+<p />
+</form>

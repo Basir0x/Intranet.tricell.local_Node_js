@@ -1,0 +1,24 @@
+# Node modules
+node_modules/
+
+# Local data and backups
+data/
+*.mdb
+*.accdb
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+
+# Logs
+npm-debug.log
+
+# Ignore build artifacts
+dist/
+build/
+
+# Ignore package lock if you prefer
+# package-lock.json

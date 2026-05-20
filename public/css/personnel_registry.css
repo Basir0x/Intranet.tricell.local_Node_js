@@ -1,0 +1,99 @@
+/* ==================== ACTIVITY LOG TABLE ==================== */
+
+#table-resp {
+    width: 100%;
+    max-width: 1200px;
+    display: table;
+    border-collapse: collapse;
+    background: #1a1a1a;
+    border: 1px solid #444;
+    border-radius: 8px;
+    overflow: hidden;
+    font-size: 14px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #ddd;
+    margin-top: 10px;
+}
+
+#table-header {
+    display: table-header-group;
+    background: #222;
+}
+
+#table-header > div {
+    display: table-cell;
+    padding: 14px 10px;
+    font-weight: bold;
+    text-align: center;
+    border-bottom: 2px solid #555;
+}
+
+/* Header Colors */
+.table-header-cell-light {
+    background-color: #2a2a2a;
+    color: #b0dfdf;
+}
+
+.table-header-cell-dark {
+    background-color: #1f5c5c;
+    color: white;
+}
+
+/* Rows */
+#table-body {
+    display: table-row-group;
+}
+
+.resp-table-row {
+    display: table-row;
+    border-bottom: 1px solid #333;
+}
+
+.resp-table-row:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+/* Cells */
+.table-body-cell,
+.table-body-cell-bigger {
+    display: table-cell;
+    padding: 12px 10px;
+    text-align: center;
+    vertical-align: middle;
+    border-right: 1px solid #333;
+}
+
+/* Last column no border */
+.table-body-cell:last-child,
+#table-header > div:last-child {
+    border-right: none;
+}
+
+/* Specific column styling */
+.table-body-cell-bigger {
+    text-align: left;
+    font-weight: 500;
+    color: #fff;
+    background-color: #252525;
+}
+
+/* Delete link */
+.table-body-cell a {
+    color: #ff4444;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.table-body-cell a:hover {
+    color: #ff6666;
+    text-decoration: underline;
+}
+
+/* Make table responsive on small screens */
+@media (max-width: 900px) {
+    #table-resp {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+}

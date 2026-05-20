@@ -1,0 +1,38 @@
+<section class="home-intro">
+  <div class="home-grid">
+    <article class="home-copy">
+      <span class="eyebrow">Welcome to Tricell Laboratories</span>
+      <h2>Leading pharmaceutical research for a safer tomorrow</h2>
+      <p>Tricell Laboratories Inc. combines advanced research, secure laboratory environments, and global operations to deliver breakthrough science with a strong ethical foundation.</p>
+      <div class="feature-card">
+        <img class="featured-image" src="images/featuredimage_pharmaceutical_research.jpg" alt="Laboratory research environment" />
+        <div class="feature-copy">
+          <h3>Precision science with a human focus</h3>
+          <p>Our research teams focus on antiviral therapeutics, biosafety protocols, and cross-disciplinary innovation powered by a commitment to reliability and responsible discovery.</p>
+        </div>
+      </div>
+      <p>From dedicated headquarters and supplier networks to an elite personnel registry, our mission is to advance health sciences responsibly while building resilient systems for communities around the world.</p>
+    </article>
+    <aside class="home-sidebar">
+      <div class="sidebar-card">
+        <h3>Employee Login</h3>
+        <p class="sidebar-intro">Secure access for authorized team members.</p>
+        <form id="sidebarLoginForm" action="/api/login" method="get" onsubmit="event.preventDefault(); if(validateSidebarForm()) { hashSidebarPassword(); document.getElementById('sidebarLoginForm').submit(); }">
+          <label for="sidebarEmployeeCode">Employee Code</label>
+          <input type="text" name="femployeecode" id="sidebarEmployeeCode" maxlength="7" autocomplete="username" required />
+          <label for="sidebarPassword">Password</label>
+          <input type="password" name="fpassword" id="sidebarPassword" maxlength="7" autocomplete="current-password" required />
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Login</button>
+            <button type="reset" class="btn btn-secondary">Reset</button>
+          </div>
+        </form>
+        <div class="sidebar-actions">
+          <a class="btn btn-outline" href="/api/personnelregistry">Personnel Registry</a>
+          <a class="btn btn-outline" href="/api/info/company_presentation">Company Presentation</a>
+        </div>
+      </div>
+    </aside>
+  </div>
+</section>
+
