@@ -1,5 +1,9 @@
-# DJINN - Backend Development Project
-# Test for branch 
+# Backend Development Project
+# Test for branch
+# In this porject we are working to develope both frontend and backend. 
+# Update: 
+# now we are working to develope a new desgin for this project. 
+# the goal is to create a modern layout for our project. 
 
 ![Node.js](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)
 ![Express](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)
