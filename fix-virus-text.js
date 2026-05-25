@@ -1,4 +1,3 @@
-// Script to fix virus descriptions by removing Japanese/Chinese characters
 const ADODB = require('node-adodb');
 const connection = ADODB.open('Provider=Microsoft.Jet.OLEDB.4.0;Data Source=./data/mdb/researchdata.mdb;');
 
@@ -10,7 +9,7 @@ async function fixVirusText() {
         console.log(`Found ${results.length} research objects`);
         
         for (const obj of results) {
-            // Look for Japanese/Chinese characters in pattern like (始祖しそウイルス shiso uirusu?)
+
             const regex = /\([\u4E00-\u9FFF\u3040-\u309F\u30A0-\u30FF]+\s+[a-z\s]+\?\)/g;
             const newText = obj.objectText.replace(regex, '');
             
