@@ -10,7 +10,7 @@ const path = require('path');
 
 const pug = require('pug');
 const { response } = require('express');
-const pug_loggedinmenu = pug.compileFile('./masterframe/loggedinmenu.html');
+const renderLoggedinMenu = require('../renderLoggedinMenu');
 
 // --------------------- Läs in Masterframen --------------------------------------------------
 const readHTML = require('../readHTML.js');
@@ -148,14 +148,14 @@ router.get('/success', function(request, response)
         htmlLoggedinMenuJS = readHTML('./masterframe/loggedinmenu_js.html');
         response.write(htmlLoggedinMenuJS);
         
-        response.write(pug_loggedinmenu({
+        response.write(renderLoggedinMenu({
             employeecode: request.cookies.employeecode,
             name: request.cookies.name,
             logintimes: request.cookies.logintimes,
             lastlogin: request.cookies.lastlogin,
             securityaccesslevel: request.session.securityAccessLevel,
-            webaddress : config.webaddress,
-          }));
+            webaddress : config.webaddress
+        }));
     }
     else
     {

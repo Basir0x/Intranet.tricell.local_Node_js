@@ -4,6 +4,32 @@ body {
     background: #020805;
     font-family: Arial, Helvetica, sans-serif;
     color: #f1f5e9;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    margin: 0 0 0.75rem;
+}
+
+h1 { font-size: 19px !important; }
+h2 { font-size: 16px !important; }
+h3, h4, h5, h6 { font-size: 14px !important; }
+
+p, li, span, label, input, textarea, select, button, a {
+    font-family: Arial, Helvetica, sans-serif !important;
+    font-weight: 400 !important;
+    font-size: 13px !important;
+}
+
+label, .subheading, .section-title, .page-header h2, .header-copy .eyebrow {
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    font-size: 16px !important;
 }
 
 a {
@@ -19,7 +45,7 @@ a:hover,
 .custom-header {
     position: relative;
     overflow: hidden;
-    min-height: 520px;
+    min-height: 300px;
     color: #fff;
 }
 
@@ -122,7 +148,7 @@ a:hover,
 .header-overlay {
     position: relative;
     z-index: 2;
-    min-height: 520px;
+    min-height: 300px;
 }
 
 .header-inner {
@@ -136,7 +162,7 @@ a:hover,
     max-width: 1200px;
     width: 100%;
     margin: 0 auto;
-    padding: 2.5rem 1rem 2rem;
+    padding: 2rem 1rem 1.5rem;
 }
 
 .header-brand {
@@ -168,8 +194,8 @@ a:hover,
 
 .header-copy h1 {
     margin: 0 0 0.85rem;
-    font-size: clamp(2.5rem, 4vw, 4.25rem);
-    line-height: 1.02;
+    font-size: clamp(2.25rem, 3.5vw, 3.2rem);
+    line-height: 1.05;
     letter-spacing: 0.03em;
 }
 
@@ -543,7 +569,7 @@ input[type="password"]::placeholder {
 @media (max-width: 640px) {
     .custom-header {
         padding: 1.5rem 0.85rem 2rem;
-        min-height: 360px;
+        min-height: 200px;
     }
 
     .header-copy h1 {

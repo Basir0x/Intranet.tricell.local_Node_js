@@ -18,8 +18,7 @@ const connection = ADODB.open('Provider=Microsoft.Jet.OLEDB.4.0;Data Source=./da
 router.use(express.static('./public'));
 
 // Importera Pug för att kunna rendera den dynamiska menyn (loggedinmenu)
-const pug = require('pug');
-const pug_loggedinmenu = pug.compileFile('./masterframe/loggedinmenu.html');
+const renderLoggedinMenu = require('../renderLoggedinMenu');
 const readHTML = require('../readHTML.js');
 
 // Ladda in Masterframe-komponenter 
@@ -63,8 +62,8 @@ function renderPageTop(request, response, pageTitle) {
     response.write(htmlHead);
     response.write(readHTML('./masterframe/loggedinmenu_css.html'));
     response.write(readHTML('./masterframe/loggedinmenu_js.html'));
-    // Rendera menyn med Pug och skicka med användardata från cookies
-    response.write(pug_loggedinmenu({
+    // Rendera menyn med simple placeholder replacement och skicka med användardata från cookies
+    response.write(renderLoggedinMenu({
         employeecode: request.cookies.employeecode,
         name: request.cookies.name,
         logintimes: request.cookies.logintimes,

@@ -1,0 +1,403 @@
+<style type="text/css">
+    /* ========== VIRUS DATABASE PAGES STYLING ========== */
+
+    .virus-details-container {
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 2rem;
+        background: rgba(13, 39, 23, 0.5);
+        border: 1px solid rgba(58, 117, 66, 0.3);
+        border-radius: 12px;
+    }
+
+    .virus-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 2rem;
+        padding-bottom: 1.5rem;
+        border-bottom: 2px solid #3a7542;
+    }
+
+    .virus-title {
+        font-size: 28px;
+        font-weight: bold;
+        color: #a8d5a8;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .status-badge {
+        padding: 4px 12px;
+        border-radius: 6px;
+        font-size: 11px;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .status-active {
+        background-color: #2d5a3d;
+        color: #7bd17f;
+        border: 1px solid #3a7542;
+    }
+
+    .status-archived {
+        background-color: rgba(128, 128, 128, 0.3);
+        color: #999999;
+        border: 1px solid #666666;
+    }
+
+    .virus-metadata {
+        font-size: 12px;
+        color: #999999;
+        text-align: right;
+        margin-top: 1rem;
+    }
+
+    .virus-metadata-line {
+        margin: 3px 0;
+    }
+
+    .backup-status-success {
+        color: #7bd17f;
+        font-weight: bold;
+        padding: 10px;
+        background-color: rgba(123, 209, 127, 0.1);
+        border: 1px solid #7bd17f;
+        border-radius: 5px;
+        margin-bottom: 1rem;
+    }
+
+    .backup-status-error {
+        color: #ff6b6b;
+        font-weight: bold;
+        padding: 10px;
+        background-color: rgba(255, 107, 107, 0.1);
+        border: 1px solid #ff6b6b;
+        border-radius: 5px;
+        margin-bottom: 1rem;
+    }
+
+    .virus-description {
+        background-color: rgba(13, 39, 23, 0.8);
+        padding: 20px;
+        border: 1px solid #3a7542;
+        margin-bottom: 2rem;
+        border-radius: 8px;
+        color: #d6e8be;
+        line-height: 1.6;
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
+    }
+
+    .btn-primary {
+        padding: 12px 20px;
+        background-color: #2d5a3d;
+        color: #ffffff;
+        border: 1px solid #3a7542;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        transition: all 0.3s;
+    }
+
+    .btn-primary:hover {
+        background-color: #3a7542;
+        box-shadow: 0 4px 12px rgba(58, 117, 66, 0.3);
+    }
+
+    .btn-secondary {
+        padding: 12px 20px;
+        background-color: #2a2a2a;
+        color: #d6e8be;
+        border: 1px solid #444444;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        transition: all 0.3s;
+    }
+
+    .btn-secondary:hover {
+        background-color: #3a3a3a;
+        border-color: #555555;
+    }
+
+    .info-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 2rem;
+        background-color: rgba(0, 0, 0, 0.2);
+        border: 1px solid #3a7542;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .info-table tr {
+        border-bottom: 1px solid rgba(58, 117, 66, 0.3);
+    }
+
+    .info-table tr:last-child {
+        border-bottom: none;
+    }
+
+    .info-table td {
+        padding: 15px;
+        color: #d6e8be;
+    }
+
+    .info-table td:first-child {
+        font-weight: bold;
+        color: #a8d5a8;
+        width: 30%;
+        background-color: rgba(58, 117, 66, 0.1);
+    }
+
+    .info-table a {
+        color: #7bd17f;
+        text-decoration: none;
+        transition: color 0.3s;
+    }
+
+    .info-table a:hover {
+        color: #a8d5a8;
+        text-decoration: underline;
+    }
+
+    .research-section-title {
+        font-size: 22px;
+        font-weight: bold;
+        color: #a8d5a8;
+        margin: 2rem 0 1.5rem 0;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid #3a7542;
+    }
+
+    .attachments-list {
+        margin-top: 2rem;
+    }
+
+    .attachment-item {
+        display: flex;
+        align-items: center;
+        padding: 12px;
+        border: 1px solid #3a7542;
+        margin-bottom: 10px;
+        background-color: rgba(45, 90, 61, 0.1);
+        border-radius: 6px;
+        transition: background-color 0.3s;
+    }
+
+    .attachment-item:hover {
+        background-color: rgba(45, 90, 61, 0.2);
+    }
+
+    .attachment-info {
+        flex: 1;
+    }
+
+    .attachment-name {
+        font-weight: bold;
+        color: #a8d5a8;
+        margin-bottom: 5px;
+    }
+
+    .attachment-meta {
+        font-size: 11px;
+        color: #999999;
+    }
+
+    .attachment-actions {
+        display: flex;
+        gap: 15px;
+        margin-left: 1rem;
+    }
+
+    .attachment-actions a {
+        color: #7bd17f;
+        text-decoration: none;
+        font-size: 12px;
+        font-weight: bold;
+        transition: color 0.3s;
+    }
+
+    .attachment-actions a:hover {
+        color: #a8d5a8;
+    }
+
+    .attachment-actions a.delete-link {
+        color: #ff6b6b;
+    }
+
+    .attachment-actions a.delete-link:hover {
+        color: #ff8888;
+    }
+
+    .research-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+        padding: 1.5rem;
+        background-color: rgba(13, 39, 23, 0.5);
+        border: 1px solid rgba(58, 117, 66, 0.3);
+        border-radius: 8px;
+    }
+
+    .research-header h2 {
+        font-size: 24px;
+        font-weight: bold;
+        color: #a8d5a8;
+        margin: 0;
+    }
+
+    .add-research-btn {
+        padding: 10px 20px;
+        background-color: #2d5a3d;
+        color: #ffffff;
+        border: 1px solid #3a7542;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 13px;
+        transition: all 0.3s;
+    }
+
+    .add-research-btn:hover {
+        background-color: #3a7542;
+        box-shadow: 0 4px 12px rgba(58, 117, 66, 0.3);
+    }
+
+    .form-wrapper {
+        max-width: 900px;
+        margin: 2rem auto;
+        padding: 2rem;
+        background: rgba(13, 39, 23, 0.5);
+        border: 1px solid rgba(58, 117, 66, 0.3);
+        border-radius: 12px;
+    }
+
+    .form-wrapper h2 {
+        font-size: 24px;
+        font-weight: bold;
+        color: #a8d5a8;
+        margin-bottom: 2rem;
+        text-align: center;
+        border-bottom: 2px solid #3a7542;
+        padding-bottom: 1rem;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+        display: block;
+        font-weight: bold;
+        color: #a8d5a8;
+        margin-bottom: 0.5rem;
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="date"],
+    .form-group input[type="url"],
+    .form-group textarea,
+    .form-group select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #3a7542;
+        background-color: rgba(13, 39, 23, 0.8);
+        color: #d6e8be;
+        border-radius: 4px;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 13px;
+        box-sizing: border-box;
+        transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+        outline: none;
+        border-color: #a8d5a8;
+        box-shadow: 0 0 8px rgba(168, 213, 168, 0.2);
+    }
+
+    .form-group textarea {
+        resize: vertical;
+        min-height: 120px;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .form-group select option {
+        background-color: #0d2717;
+        color: #d6e8be;
+    }
+
+    .form-actions {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        margin-top: 2rem;
+    }
+
+    @media (max-width: 768px) {
+        .virus-header {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .virus-title {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .virus-metadata {
+            text-align: left;
+        }
+
+        .action-buttons {
+            flex-direction: column;
+        }
+
+        .btn-primary, .btn-secondary {
+            width: 100%;
+        }
+
+        .attachment-item {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .attachment-actions {
+            margin-left: 0;
+            margin-top: 1rem;
+            width: 100%;
+            justify-content: space-between;
+        }
+
+        .form-actions {
+            flex-direction: column;
+        }
+
+        .form-actions button {
+            width: 100%;
+        }
+    }
+</style>

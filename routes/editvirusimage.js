@@ -11,7 +11,7 @@ const path = require('path');
 
 const pug = require('pug');
 const { response } = require('express');
-const pug_loggedinmenu = pug.compileFile('./masterframe/loggedinmenu.html');
+const renderLoggedinMenu = require('../renderLoggedinMenu');
 const pug_editemployee = pug.compileFile('./masterframe/editemployee.html');
 
 

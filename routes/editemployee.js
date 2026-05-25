@@ -12,7 +12,7 @@ const path = require('path');
 
 const pug = require('pug');
 const { response } = require('express');
-const pug_loggedinmenu = pug.compileFile('./masterframe/loggedinmenu.html');
+const renderLoggedinMenu = require('../renderLoggedinMenu');
 const pug_editemployee = pug.compileFile('./masterframe/editemployee.html');
 
 
@@ -98,8 +98,7 @@ router.post('/:id', function(request, response)
         {
             response.write(htmlLoggedinMenuCSS);
             response.write(htmlLoggedinMenuJS);
-            //response.write(htmlLoggedinMenu);
-            response.write(pug_loggedinmenu({
+            response.write(renderLoggedinMenu({
                 employeecode: request.cookies.employeecode,
                 name: request.cookies.name,
                 logintimes: request.cookies.logintimes,
@@ -107,7 +106,6 @@ router.post('/:id', function(request, response)
                 webaddress : config.webaddress,
             }));
         }
-        response.write(htmlLoggedinMenu);
         response.write(htmlHeader);
         response.write(htmlMenu);
         response.write(htmlInfoStart);
@@ -198,7 +196,7 @@ router.get('/:id', (request, response) =>
         response.write(htmlLoggedinMenuCSS);
         response.write(htmlLoggedinMenuJS);
         //response.write(htmlLoggedinMenu);
-        response.write(pug_loggedinmenu({
+        response.write(renderLoggedinMenu({
             employeecode: request.cookies.employeecode,
             name: request.cookies.name,
             logintimes: request.cookies.logintimes,

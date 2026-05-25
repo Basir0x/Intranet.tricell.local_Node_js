@@ -8,7 +8,7 @@ const readHTML = require('../readHTML.js');
 
 // Load Pug for logged-in menu
 const pug = require('pug');
-const pug_loggedinmenu = pug.compileFile('./masterframe/loggedinmenu.html');
+const renderLoggedinMenu = require('../renderLoggedinMenu');
 
 // Load all masterframe components
 var htmlHead = readHTML('./masterframe/head.html');
@@ -81,7 +81,7 @@ router.get('/', (request, response) => {
         if(request.session.loggedin) {
             response.write(htmlLoggedinMenuCSS);
             response.write(htmlLoggedinMenuJS);
-            response.write(pug_loggedinmenu({
+                response.write(renderLoggedinMenu({
                 employeecode: request.cookies.employeecode,
                 name: request.cookies.name,
                 logintimes: request.cookies.logintimes,

@@ -28,8 +28,7 @@ app.use(
         extended: true
     }));
 
-const pug = require('pug');
-const pug_loggedinmenu = pug.compileFile('./masterframe/loggedinmenu.html');
+const renderLoggedinMenu = require('./renderLoggedinMenu');
 
 /* ------------------------------ Egna moduler ----------------------------------- */
 const readHTML = require('./readHTML.js');
@@ -78,7 +77,7 @@ app.get('/', function(request, response)
         const htmlLoggedinMenuJS = readHTML('./masterframe/loggedinmenu_js.html');
         response.write(htmlLoggedinMenuJS);
 
-        response.write(pug_loggedinmenu({
+        response.write(renderLoggedinMenu({
             employeecode: request.cookies.employeecode,
             name: request.cookies.name,
             logintimes: request.cookies.logintimes,

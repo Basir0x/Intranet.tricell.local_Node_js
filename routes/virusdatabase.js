@@ -5,8 +5,7 @@ const router = express.Router();
 router.use(express.static('./public'));
 const path = require('path');
 
-const pug = require('pug');
-const pug_loggedinmenu = pug.compileFile('./masterframe/loggedinmenu.html');
+const renderLoggedinMenu = require('../renderLoggedinMenu');
 
 // --------------------- Läs in Masterframen --------------------------------
 const readHTML = require('../readHTML.js');
@@ -30,6 +29,9 @@ var htmlResearchEntries = readHTML('./masterframe/researchentries.html');
 
 // Virus image component styles
 var htmlVirusimagesCSS = readHTML('./masterframe/virusimages_css.html');
+
+// Virus database component styles
+var htmlVirusDatabaseCSS = readHTML('./masterframe/virusdatabase_css.html');
 
 // Öppna databasen
 const ADODB = require('node-adodb');
@@ -118,13 +120,13 @@ router.get('/', async function(request, response)
     if(request.session.loggedin){response.write(htmlLoggedinMenuCSS);}
     if(request.session.loggedin){response.write(htmlLoggedinMenuJS);}
     if(request.session.loggedin){
-        response.write(pug_loggedinmenu({
+        response.write(renderLoggedinMenu({
             employeecode: request.cookies.employeecode,
             name: request.cookies.name,
             logintimes: request.cookies.logintimes,
             lastlogin: request.cookies.lastlogin,
             securityaccesslevel: request.session.securityAccessLevel,
-            webaddress : config.webaddress,
+            webaddress : config.webaddress
         }));
     }
     response.write(htmlHeader);
@@ -284,57 +286,58 @@ router.get('/new', function(request, response)
     response.write(htmlHead);
     if(request.session.loggedin){response.write(htmlLoggedinMenuCSS);}
     if(request.session.loggedin){response.write(htmlLoggedinMenuJS);}
+    if(request.session.loggedin){response.write(htmlVirusDatabaseCSS);}
     if(request.session.loggedin){
-        response.write(pug_loggedinmenu({
+        response.write(renderLoggedinMenu({
             employeecode: request.cookies.employeecode,
             name: request.cookies.name,
             logintimes: request.cookies.logintimes,
             lastlogin: request.cookies.lastlogin,
             securityaccesslevel: request.session.securityAccessLevel,
-            webaddress : config.webaddress,
+            webaddress : config.webaddress
         }));
     }
     response.write(htmlHeader);
     response.write(htmlMenu);
     response.write(htmlInfoStart);
 
-    response.write('<h2 style="font-size: 28px; font-weight: bold; color: #a8d5a8; margin-bottom: 2rem; text-align: center; border-bottom: 2px solid #3a7542; padding-bottom: 1rem;">Add New Research Object</h2>');
+    response.write('<div class="form-wrapper"><h2>Add New Research Object</h2>');
     
-    // Modern Form with Grid Layout
     response.write(`
-    <form action="/api/virusdatabase/new" method="POST" style="max-width: 800px; margin: 2rem auto; padding: 2rem; background: rgba(13, 39, 23, 0.5); border: 1px solid rgba(58, 117, 66, 0.3); border-radius: 12px; display: flex; flex-direction: column; gap: 1.5rem;">
-    
-        <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-            <label style="font-size: 12px; font-weight: bold; color: #a8d5a8; text-transform: uppercase; letter-spacing: 0.5px;">Object Number:</label>
-            <input type="text" name="objectNumber" required placeholder="e.g., TCL#12" style="width: 100%; padding: 10px; border: 1px solid #3a7542; background-color: rgba(13, 39, 23, 0.8); color: #d6e8be; border-radius: 4px; font-family: Arial, Helvetica, sans-serif; font-size: 13px; box-sizing: border-box;">
+    <form action="/api/virusdatabase/new" method="POST">
+        <div class="form-group">
+            <label>Object Number:</label>
+            <input type="text" name="objectNumber" required placeholder="e.g., TCL#12" />
         </div>
 
-        <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-            <label style="font-size: 12px; font-weight: bold; color: #a8d5a8; text-transform: uppercase; letter-spacing: 0.5px;">Object Name:</label>
-            <input type="text" name="objectName" required placeholder="Name of the research object" style="width: 100%; padding: 10px; border: 1px solid #3a7542; background-color: rgba(13, 39, 23, 0.8); color: #d6e8be; border-radius: 4px; font-family: Arial, Helvetica, sans-serif; font-size: 13px; box-sizing: border-box;">
+        <div class="form-group">
+            <label>Object Name:</label>
+            <input type="text" name="objectName" required placeholder="Name of the research object" />
         </div>
 
-        <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-            <label style="font-size: 12px; font-weight: bold; color: #a8d5a8; text-transform: uppercase; letter-spacing: 0.5px;">Information / Description:</label>
-            <textarea name="objectText" rows="10" required placeholder="Detailed information and description" style="width: 100%; padding: 10px; border: 1px solid #3a7542; background-color: rgba(13, 39, 23, 0.8); color: #d6e8be; border-radius: 4px; font-family: Arial, Helvetica, sans-serif; font-size: 13px; box-sizing: border-box; resize: vertical;"></textarea>
+        <div class="form-group">
+            <label>Information / Description:</label>
+            <textarea name="objectText" required placeholder="Detailed information and description"></textarea>
         </div>
 
-        <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-            <label style="font-size: 12px; font-weight: bold; color: #a8d5a8; text-transform: uppercase; letter-spacing: 0.5px;">Security Presentation Video URL: <span style="font-size: 11px; color: #a8d5a8; font-weight: normal;">(Optional)</span></label>
-            <input type="text" name="presentationVideoLink" placeholder="https://..." style="width: 100%; padding: 10px; border: 1px solid #3a7542; background-color: rgba(13, 39, 23, 0.8); color: #d6e8be; border-radius: 4px; font-family: Arial, Helvetica, sans-serif; font-size: 13px; box-sizing: border-box;">
+        <div class="form-group">
+            <label>Security Presentation Video URL: <span style="font-size: 11px; color: #a8d5a8; font-weight: normal;">(Optional)</span></label>
+            <input type="url" name="presentationVideoLink" placeholder="https://..." />
         </div>
 
-        <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-            <label style="font-size: 12px; font-weight: bold; color: #a8d5a8; text-transform: uppercase; letter-spacing: 0.5px;">Security Handling Video URL: <span style="font-size: 11px; color: #a8d5a8; font-weight: normal;">(Optional)</span></label>
-            <input type="text" name="securityVideoLink" placeholder="https://..." style="width: 100%; padding: 10px; border: 1px solid #3a7542; background-color: rgba(13, 39, 23, 0.8); color: #d6e8be; border-radius: 4px; font-family: Arial, Helvetica, sans-serif; font-size: 13px; box-sizing: border-box;">
+        <div class="form-group">
+            <label>Security Handling Video URL: <span style="font-size: 11px; color: #a8d5a8; font-weight: normal;">(Optional)</span></label>
+            <input type="url" name="securityVideoLink" placeholder="https://..." />
         </div>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem;">
-            <button type="submit" style="padding: 12px 20px; font-size: 14px; font-weight: bold; background-color: #3a7542; color: #ffffff; border: 1px solid #3a7542; border-radius: 5px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; transition: background-color 0.3s;">Save to Database</button>
-            <button type="reset" style="padding: 12px 20px; font-size: 14px; font-weight: bold; background-color: rgba(58, 117, 66, 0.2); color: #d6e8be; border: 1px solid #3a7542; border-radius: 5px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; transition: background-color 0.3s;">Clear Form</button>
+        <div class="form-actions">
+            <button type="submit" class="btn-primary">💾 Save to Database</button>
+            <button type="reset" class="btn-secondary">🔄 Clear Form</button>
         </div>
     </form>
     `);
+
+    response.write('</div>');
 
     response.write(htmlInfoStop);
     response.write(htmlFooter);
@@ -440,14 +443,15 @@ router.get('/edit/:id', async function(request, response)
     response.write(htmlHead);
     if(request.session.loggedin){response.write(htmlLoggedinMenuCSS);}
     if(request.session.loggedin){response.write(htmlLoggedinMenuJS);}
+    if(request.session.loggedin){response.write(htmlVirusDatabaseCSS);}
     if(request.session.loggedin){
-        response.write(pug_loggedinmenu({
+        response.write(renderLoggedinMenu({
             employeecode: request.cookies.employeecode,
             name: request.cookies.name,
             logintimes: request.cookies.logintimes,
             lastlogin: request.cookies.lastlogin,
             securityaccesslevel: request.session.securityAccessLevel,
-            webaddress : config.webaddress,
+            webaddress : config.webaddress
         }));
     }
     response.write(htmlHeader);
@@ -460,43 +464,60 @@ router.get('/edit/:id', async function(request, response)
         if (result.length > 0) {
             const virus = result[0];
 
+            response.write('<div class="form-wrapper">');
             response.write('<h2>Edit Research Object</h2>');
             response.write('<form action="/api/virusdatabase/edit/' + id + '" method="POST">');
-            response.write('<table style="width: 100%; border-spacing: 10px 10px;">');
-            response.write('<tr><td style="width: 200px;"><b>Object Number:</b></td>');
-            response.write('<td><input type="text" name="objectNumber" value="' + virus.objectNumber + '" required style="width: 100%;"></td></tr>');
-            response.write('<tr><td><b>Object Name:</b></td>');
-            response.write('<td><input type="text" name="objectName" value="' + virus.objectName + '" required style="width: 100%;"></td></tr>');
-            response.write('<tr><td valign="top"><b>Information/Description:</b></td>');
-            response.write('<td><textarea name="objectText" rows="8" required style="width: 100%;">' + virus.objectText + '</textarea></td></tr>');
+            
+            response.write('<div class="form-group">');
+            response.write('<label>Object Number:</label>');
+            response.write('<input type="text" name="objectNumber" value="' + virus.objectNumber + '" required />');
+            response.write('</div>');
+            
+            response.write('<div class="form-group">');
+            response.write('<label>Object Name:</label>');
+            response.write('<input type="text" name="objectName" value="' + virus.objectName + '" required />');
+            response.write('</div>');
+            
+            response.write('<div class="form-group">');
+            response.write('<label>Information/Description:</label>');
+            response.write('<textarea name="objectText" required>' + virus.objectText + '</textarea>');
+            response.write('</div>');
             
             let pVideo = virus.presentationVideoLink ? virus.presentationVideoLink : "";
             let sVideo = virus.securityVideoLink ? virus.securityVideoLink : "";
 
-            response.write('<tr><td><b>Security Presentation Video URL:</b></td>');
-            response.write('<td><input type="text" name="presentationVideoLink" value="' + pVideo + '" style="width: 100%;"></td></tr>');
-            response.write('<tr><td><b>Security Handling Video URL:</b></td>');
-            response.write('<td><input type="text" name="securityVideoLink" value="' + sVideo + '" style="width: 100%;"></td></tr>');
+            response.write('<div class="form-group">');
+            response.write('<label>Security Presentation Video URL:</label>');
+            response.write('<input type="url" name="presentationVideoLink" value="' + pVideo + '" />');
+            response.write('</div>');
+            
+            response.write('<div class="form-group">');
+            response.write('<label>Security Handling Video URL:</label>');
+            response.write('<input type="url" name="securityVideoLink" value="' + sVideo + '" />');
+            response.write('</div>');
             
             // Visa status dropdown för admin-användare
             if (request.session.securityAccessLevel === 'A') {
-                response.write('<tr><td><b>Status:</b></td>');
-                response.write('<td><select name="objectStatus">');
+                response.write('<div class="form-group">');
+                response.write('<label>Status:</label>');
+                response.write('<select name="objectStatus">');
                 response.write('<option value="open"' + (virus.objectStatus === 'open' ? ' selected' : '') + '>Open</option>');
                 response.write('<option value="archive"' + (virus.objectStatus === 'archive' ? ' selected' : '') + '>Archived</option>');
-                response.write('</select></td></tr>');
+                response.write('</select>');
+                response.write('</div>');
             }
             
-            response.write('<tr><td colspan="2" style="text-align: right; padding-top: 20px;">');
-            response.write('<input type="submit" value="Update Database" style="background-color: #548d8d; color: white; border: none; padding: 8px 16px; cursor: pointer; font-weight: bold;">');
-            response.write('</td></tr>');
-            response.write('</table>');
+            response.write('<div class="form-actions">');
+            response.write('<button type="submit" class="btn-primary">💾 Update Database</button>');
+            response.write('<a href="/api/virusdatabase/' + id + '" class="btn-secondary" style="padding: 12px 20px; display: inline-block; text-decoration: none; text-align: center;">↩ Cancel</a>');
+            response.write('</div>');
             response.write('</form>');
+            response.write('</div>');
 
             // lägg till CSS för virusbilder
             response.write(htmlVirusimagesCSS);
             // visa virusbilderna under redigeringsformuläret
-            response.write('<h3>Virus images</h3>');
+            response.write('<h3 class="research-section-title">Virus Images</h3>');
             response.write(getVirusImagesHTML(id));
         } else {
             response.write('<p>Virus not found.</p>');
@@ -566,14 +587,15 @@ router.get('/:id', async function(request, response)
     if(request.session.loggedin){response.write(htmlLoggedinMenuJS);}
     if(request.session.loggedin){response.write(htmlResearchEntriesCSS);}
     if(request.session.loggedin){response.write(htmlResearchEntriesJS);}
+    if(request.session.loggedin){response.write(htmlVirusDatabaseCSS);}
     if(request.session.loggedin){
-        response.write(pug_loggedinmenu({
+        response.write(renderLoggedinMenu({
             employeecode: request.cookies.employeecode,
             name: request.cookies.name,
             logintimes: request.cookies.logintimes,
             lastlogin: request.cookies.lastlogin,
             securityaccesslevel: request.session.securityAccessLevel,
-            webaddress : config.webaddress,
+            webaddress : config.webaddress
         }));
     }
     response.write(htmlHeader);
@@ -602,66 +624,69 @@ router.get('/:id', async function(request, response)
             
             // Visa virusets namn och nummer med en statusbadge som indikerar om det är arkiverat eller inte
             const statusBadge = virus.objectStatus === 'archive' ? 
-                '<span style="background-color: #e0e0e0; color: #777; padding: 2px 8px; border-radius: 4px; font-size: 12px; margin-left: 10px;">ARCHIVED</span>' : 
-                '<span style="background-color: #548d8d; color: white; padding: 2px 8px; border-radius: 4px; font-size: 12px; margin-left: 10px;">ACTIVE</span>';
+                '<span class="status-badge status-archived">ARCHIVED</span>' : 
+                '<span class="status-badge status-active">ACTIVE</span>';
             
-            response.write('<h2>' + virus.objectNumber + ' ' + virus.objectName + statusBadge + '</h2>');
+            response.write('<div class="virus-details-container">');
+            response.write('<div class="virus-header">');
+            response.write('<h2 class="virus-title">' + virus.objectNumber + ' ' + virus.objectName + ' ' + statusBadge + '</h2>');
+            response.write('</div>');
+            
+            response.write('<div class="virus-metadata"><div class="virus-metadata-line">Created ' + virus.objectCreatedDate + '</div><div class="virus-metadata-line">By ' + virus.objectCreator + '</div></div>');
             
             // Visar backup-statusmeddelande om det finns i sessionen
             if (request.session.backupStatus === 'success') {
-                response.write('<div style="color: green; font-weight: bold; margin-bottom: 10px;">Virus is now backed up</div>');
-                delete request.session.backupStatus; // raensa efter visning
+                response.write('<div class="backup-status-success">✓ Virus is now backed up</div>');
+                delete request.session.backupStatus;
             } else if (request.session.backupStatus === 'error') {
-                response.write('<div style="color: red; font-weight: bold; margin-bottom: 10px;">Error backing up virus</div>');
-                delete request.session.backupStatus; // raensa efter visning
+                response.write('<div class="backup-status-error">✗ Error backing up virus</div>');
+                delete request.session.backupStatus;
             }
-            
-            response.write('<div style="font-size: 11px; text-align: right;">Created ' + virus.objectCreatedDate + '<br>By ' + virus.objectCreator + '</div>');
             
             // lägg till CSS för virusbilder
             response.write(htmlVirusimagesCSS);
 
-            response.write('<div style="background-color: #e6e6fa; padding: 15px; border: 1px solid #000; margin-bottom: 20px;">');
+            response.write('<div class="virus-description">');
             response.write(virus.objectText);
             response.write('</div>');
 
             if (request.session.securityAccessLevel === 'A' || request.session.securityAccessLevel === 'B') {
-                response.write('<div style="margin-bottom: 10px;display:flex;gap:8px;">');
-                response.write('<button onclick="window.location.href=\'/api/virusdatabase/edit/' + id + '\'">Edit Info</button>');
-                response.write('<button onclick="window.location.href=\'/api/data/' + id + '\'">Upload Attachment</button>');
+                response.write('<div class="action-buttons">');
+                response.write('<button class="btn-primary" onclick="window.location.href=\'/api/virusdatabase/edit/' + id + '\'">✎ Edit Info</button>');
+                response.write('<button class="btn-primary" onclick="window.location.href=\'/api/data/' + id + '\'">⬆ Upload Attachment</button>');
                 
                 // Visar Archive/Open-knapp endast för nivå A-användare
                 if (request.session.securityAccessLevel === 'A') {
                     const toggleText = virus.objectStatus === 'archive' ? 'Open Object' : 'Archive Object';
-                    response.write('<button onclick="window.location.href=\'/api/virusdatabase/toggle/' + id + '\'" style="background-color: #336699; color: white;">' + toggleText + '</button>');
+                    response.write('<button class="btn-secondary" onclick="window.location.href=\'/api/virusdatabase/toggle/' + id + '\'">🔒 ' + toggleText + '</button>');
                 }
 
                 // Visar Backup-knapp för både nivå A och B
-                response.write('<button onclick="window.location.href=\'/api/virusdatabase/backup/' + id + '\'" style="background-color: #336699; color: white;">Backup</button>');
+                response.write('<button class="btn-secondary" onclick="window.location.href=\'/api/virusdatabase/backup/' + id + '\'">💾 Backup</button>');
                 
                 response.write('</div>');
             }
 
-            response.write('<table style="width: 100%; border: 1px solid #000; border-collapse: collapse;">');
+            response.write('<table class="info-table">');
             
             const pdfPath = './data/safetydatasheets/' + virus.objectNumber + '.pdf';
-            response.write('<tr><td style="padding: 10px;"><b>Security data sheet:</b></td><td style="padding: 10px;">');
+            response.write('<tr><td>Security Data Sheet:</td><td>');
             if (fs.existsSync(pdfPath)) {
-                response.write('<a href="/safetydatasheets/' + virus.objectNumber + '.pdf" target="_blank" style="color: #008000;">' + virus.objectNumber + ' ' + virus.objectName + '.pdf</a>');
+                response.write('<a href="/safetydatasheets/' + virus.objectNumber + '.pdf" target="_blank">' + virus.objectNumber + ' ' + virus.objectName + '.pdf</a>');
             } else {
                 response.write('');
             }
             response.write('</td></tr>');
 
-            response.write('<tr><td style="padding: 10px;"><b>Security Presentation Video:</b></td><td style="padding: 10px;">');
+            response.write('<tr><td>Security Presentation Video:</td><td>');
             if (virus.presentationVideoLink) {
-                response.write('<a href="' + virus.presentationVideoLink + '" target="_blank" style="color: #008000;">' + virus.presentationVideoLink + '</a>');
+                response.write('<a href="' + virus.presentationVideoLink + '" target="_blank">' + virus.presentationVideoLink + '</a>');
             }
             response.write('</td></tr>');
 
-            response.write('<tr><td style="padding: 10px;"><b>Security Handling Video:</b></td><td style="padding: 10px;">');
+            response.write('<tr><td>Security Handling Video:</td><td>');
             if (virus.securityVideoLink) {
-                response.write('<a href="' + virus.securityVideoLink + '" target="_blank" style="color: #008000;">' + virus.securityVideoLink + '</a>');
+                response.write('<a href="' + virus.securityVideoLink + '" target="_blank">' + virus.securityVideoLink + '</a>');
             }
             response.write('</td></tr>');
 
@@ -688,21 +713,21 @@ router.get('/:id', async function(request, response)
                 }
 
                 if (attachments.length > 0) {
-                    response.write('<h2>Attached Documents</h2>');
-                    response.write('<div id="attachments-list" style="margin-top: 20px;">');
+                    response.write('<h2 class="research-section-title">Attached Documents</h2>');
+                    response.write('<div class="attachments-list">');
                     for (const att of attachments) {
                         response.write(`
-                            <div style="display: flex; align-items: center; padding: 10px; border: 1px solid #ccc; margin-bottom: 5px; background: #f9f9f9;">
-                                <div style="flex: 1;">
-                                    <strong>${att.name}</strong><br>
-                                    <small>Size: ${att.size} | Uploaded: ${att.date}</small>
+                            <div class="attachment-item">
+                                <div class="attachment-info">
+                                    <div class="attachment-name">${att.name}</div>
+                                    <div class="attachment-meta">Size: ${att.size} | Uploaded: ${att.date}</div>
                                 </div>
-                                <div style="display: flex; gap: 10px; align-items: center;">
-                                    <a href="/attachments/${id}/attachments/${att.name}" target="_blank" style="color: #336699; text-decoration: none;">View</a>
-                                    <a href="/api/data/${id}" style="color: #336699; text-decoration: none;">Add</a>
-                                    <form method="POST" action="/api/data/${id}/delete-file" style="margin: 0;">
+                                <div class="attachment-actions">
+                                    <a href="/attachments/${id}/attachments/${att.name}" target="_blank">📄 View</a>
+                                    <a href="/api/data/${id}">⬆ Add</a>
+                                    <form method="POST" action="/api/data/${id}/delete-file" style="margin: 0; display: inline;">
                                         <input type="hidden" name="fileName" value="${att.name}">
-                                        <a href="#" onclick="if(confirm('Delete this attachment?')) this.closest('form').submit(); return false;" style="color: red; text-decoration: none;">Delete</a>
+                                        <a href="#" onclick="if(confirm('Delete this attachment?')) this.closest('form').submit(); return false;" class="delete-link">🗑 Delete</a>
                                     </form>
                                 </div>
                             </div>
@@ -714,6 +739,8 @@ router.get('/:id', async function(request, response)
                 // Lägg till sektion för virusbilder (uppladdning och galleri) för auktoriserade användare
                 response.write(getVirusImagesHTML(id));
             }
+
+            response.write('</div>'); // Close virus-details-container
         } else {
             response.write('<p>Virus not found.</p>');
         }

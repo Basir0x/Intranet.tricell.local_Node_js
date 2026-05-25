@@ -1,8 +1,9 @@
 body
 {
 	background-color: #ffffff;
-	font-family : Arial, Verdana, Geneva, Helvetica, sans-serif;
-	font-size: 12px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	line-height: 1.6;
 	color: #000000;
 }
 a:link { color:#ffffff; text-decoration: none; }

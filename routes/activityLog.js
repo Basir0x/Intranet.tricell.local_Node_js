@@ -11,7 +11,7 @@ const readHTML = require('../readHTML.js');
 const ADODB = require('node-adodb');
 
 // Pre-compile Pug once (good)
-const pug_loggedinmenu = pug.compileFile('./masterframe/loggedinmenu.html');
+const renderLoggedinMenu = require('../renderLoggedinMenu');
 
 // Load masterframe parts once (outside routes)
 const htmlHead = readHTML('./masterframe/head.html');
@@ -30,12 +30,12 @@ const canEdit = (req) => {
 // Helper to write common header/menu
 function writeCommonHeader(req, res) {
   res.write(htmlHead);
-  if (req.session.loggedin) {
+    if (req.session.loggedin) {
     const htmlLoggedinMenuCSS = readHTML('./masterframe/loggedinmenu_css.html');
     const htmlLoggedinMenuJS = readHTML('./masterframe/loggedinmenu_js.html');
     res.write(htmlLoggedinMenuCSS);
     res.write(htmlLoggedinMenuJS);
-    res.write(pug_loggedinmenu({
+    res.write(renderLoggedinMenu({
       employeecode: req.cookies.employeecode,
       name: req.cookies.name,
       logintimes: req.cookies.logintimes,

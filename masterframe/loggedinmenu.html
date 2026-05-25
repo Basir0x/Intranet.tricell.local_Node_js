@@ -1,4 +1,4 @@
-<div id="loggedinMenuLayer">
+<div id="loggedinMenuLayer" role="region" aria-label="Logged in menu">
     <div id="userinfo">
         <b>User info:</b><br />
             <p> Employee Code: #{employeecode}</p>
@@ -13,35 +13,36 @@
     </div>
     <table border="0" cellspacing="0" cellpadding="0"><tr><td height="1" width="150" bgcolor="#003366"></td></tr></table>
     <div class="loggedinbutton">
-        <a href="javascript:void(0)" onClick="javascript:showCalcLayer();" style="color:#336699;text-decoration:none;">Tricell Calculator</a>
+        <a href="javascript:void(0)" onClick="javascript:showCalcLayer();" style="color:#ffffff;text-decoration:none;">Tricell Calculator</a>
     </div>
     <table border="0" cellspacing="0" cellpadding="0"><tr><td height="1" width="150" bgcolor="#003366"></td></tr></table>
-    <div class="loggedinbutton"><a href="/api/userdatabase" style="color:#336699;text-decoration:none;">User Database</a></div>
+    <div class="loggedinbutton"><a href="/api/userdatabase" style="color:#ffffff;text-decoration:none;">User Database</a></div>
     <table border="0" cellspacing="0" cellpadding="0"><tr><td height="1" width="150" bgcolor="#003366"></td></tr></table>
 
     <!-- VIRUS LIVESTREAM BUTTON -->
     <div class="loggedinbutton">
-        <a href="/api/livestream" style="color:#336699;text-decoration:none;">Virus Livestream</a>
+        <a href="/api/livestream" style="color:#ffffff;text-decoration:none;">Virus Livestream</a>
     </div>
     <table border="0" cellspacing="0" cellpadding="0"><tr><td height="1" width="150" bgcolor="#003366"></td></tr></table>
  
-    if securityaccesslevel === 'A' || securityaccesslevel === 'B'
-        <div class="loggedinbutton">
-            <a id="researchDbLink" href="javascript:void(0)" style="color:#aaaaaa;text-decoration:none;cursor:default;">Research Database</a>
-        </div>
-        <div class="loggedinbutton">
-            <a href="/api/activitylog" style="color:#336699;text-decoration:none;">Activity Log</a>
-        </div>
-        <div style="padding:2px 8px 4px 8px;font-size:11px;">
-            <span id="hqDot" style="display:inline-block;width:9px;height:9px;border-radius:50%;background:#cc0000;margin-right:5px;vertical-align:middle;"></span><span id="hqStatusText" style="color:#cc0000;">Not connected</span>
-        </div>
-        <table border="0" cellspacing="0" cellpadding="0"><tr><td height="1" width="150" bgcolor="#003366"></td></tr></table>
-        <div class="loggedinbutton">
-            <a href="javascript:void(0)" onclick="openHQPopup();" style="color:#336699;text-decoration:none;">Connect to HQ</a>
-        </div>
-        <table border="0" cellspacing="0" cellpadding="0"><tr><td height="1" width="150" bgcolor="#003366"></td></tr></table>
+    <!-- IF_ADMIN_OR_ABOVE -->
+    <div class="loggedinbutton">
+        <a id="researchDbLink" href="javascript:void(0)" style="color:#ffffff;text-decoration:none;cursor:default;">Research Database</a>
+    </div>
+    <div class="loggedinbutton">
+        <a href="/api/activitylog" style="color:#336699;text-decoration:none;">Activity Log</a>
+    </div>
+    <div style="padding:2px 8px 4px 8px;font-size:11px;">
+        <span id="hqDot" style="display:inline-block;width:9px;height:9px;border-radius:50%;background:#cc0000;margin-right:5px;vertical-align:middle;"></span><span id="hqStatusText" style="color:#cc0000;">Not connected</span>
+    </div>
+    <table border="0" cellspacing="0" cellpadding="0"><tr><td height="1" width="150" bgcolor="#003366"></td></tr></table>
+    <div class="loggedinbutton">
+        <a href="javascript:void(0)" onclick="openHQPopup();" style="color:#ffffff;text-decoration:none;">Connect to HQ</a>
+    </div>
+    <table border="0" cellspacing="0" cellpadding="0"><tr><td height="1" width="150" bgcolor="#003366"></td></tr></table>
+    <!-- END_IF_ADMIN_OR_ABOVE -->
  
-    - if (securityaccesslevel === "A") {
+    <!-- IF_ADMIN_ONLY -->
     <div class="loggedinbutton">
         <a href="javascript:void(0)" onClick="showPanicLayer()" style="color:#cc0000;text-decoration:none;">Panic Button</a>
     </div>
@@ -49,13 +50,25 @@
     <table border="0" cellspacing="0" cellpadding="0">
         <tr><td height="1" width="150" bgcolor="#003366"></td></tr>
     </table>
-    - }
+    <!-- END_IF_ADMIN_ONLY -->
  
     <div class="loggedinbutton">
-        <a href="/api/logout" style="color:#336699;text-decoration:none;">Log out</a>
+        <a href="/api/logout" style="color:#ffffff;text-decoration:none;">Log out</a>
     </div>
     <table border="0" cellspacing="0" cellpadding="0"><tr><td height="1" width="150" bgcolor="#003366"></td></tr></table>
 </div>
+
+<script>
+    // Hide the login form area when a user is logged in (loggedin menu is only rendered when logged in)
+    document.addEventListener('DOMContentLoaded', function() {
+        try {
+            var loginLayer = document.getElementById('loginLayer');
+            if (loginLayer) {
+                loginLayer.style.display = 'none';
+            }
+        } catch (e) { /* ignore */ }
+    });
+</script>
  
 <!-- PANIC LAYER MODAL -->
 <div id="panicLayer">
@@ -94,7 +107,7 @@
     <div id="hqDoneMsg" style="display:none;margin-top:14px;color:#2a7a2a;font-size:12px;font-weight:bold;letter-spacing:1px;">You are connected</div>
 </div>
  
-script.
+<script>
     function openHQPopup() {
         var popup = document.getElementById('hqPopup');
         popup.style.display = 'block';
@@ -124,6 +137,7 @@ script.
         link.style.color = '#336699';
         link.style.cursor = 'pointer';
     }
+</script>
  
 <div id="chatLayer">
     <div id="chatLayerTitle">Tricell Chat <span style="float:right;cursor:pointer;" onClick="showChatLayer()">X</span></div>

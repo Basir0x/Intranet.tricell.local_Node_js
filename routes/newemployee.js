@@ -12,7 +12,7 @@ const path = require('path');
 
 const pug = require('pug');
 const { response } = require('express');
-const pug_loggedinmenu = pug.compileFile('./masterframe/loggedinmenu.html');
+const renderLoggedinMenu = require('../renderLoggedinMenu');
 
 // --------------------- Läs in Masterframen --------------------------------
 const readHTML = require('../readHTML.js');
@@ -88,14 +88,14 @@ router.post('/', function(request, response)
         {
             response.write(htmlLoggedinMenuCSS);
             response.write(htmlLoggedinMenuJS);
-            //response.write(htmlLoggedinMenu);
-            response.write(pug_loggedinmenu({
-                employeecode: request.cookies.employeecode,
-                name: request.cookies.name,
-                logintimes: request.cookies.logintimes,
-                lastlogin: request.cookies.lastlogin,
-                webaddress : config.webaddress,
-              }));
+                        //response.write(htmlLoggedinMenu);
+                        response.write(renderLoggedinMenu({
+                                employeecode: request.cookies.employeecode,
+                                name: request.cookies.name,
+                                logintimes: request.cookies.logintimes,
+                                lastlogin: request.cookies.lastlogin,
+                                webaddress : config.webaddress,
+                            }));
         }
         response.write(htmlHeader);
         response.write(htmlMenu);
@@ -146,13 +146,13 @@ router.get('/', (request, response) =>
     {
         response.write(htmlLoggedinMenuCSS);
         response.write(htmlLoggedinMenuJS);
-        //response.write(htmlLoggedinMenu);
-        response.write(pug_loggedinmenu({
-            employeecode: request.cookies.employeecode,
-            name: request.cookies.name,
-            logintimes: request.cookies.logintimes,
-            lastlogin: request.cookies.lastlogin,
-          }));
+                //response.write(htmlLoggedinMenu);
+                response.write(renderLoggedinMenu({
+                        employeecode: request.cookies.employeecode,
+                        name: request.cookies.name,
+                        logintimes: request.cookies.logintimes,
+                        lastlogin: request.cookies.lastlogin,
+                    }));
     }
     response.write(htmlHeader);
     response.write(htmlMenu);

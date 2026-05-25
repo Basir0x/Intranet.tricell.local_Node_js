@@ -6,8 +6,7 @@ router.use(express.json());
 router.use(express.static('./public'));
 const path = require('path');
 
-const pug = require('pug');
-const pug_loggedinmenu = pug.compileFile('./masterframe/loggedinmenu.html');
+const renderLoggedinMenu = require('../renderLoggedinMenu');
 
 // --------------------- Läs in Masterframen --------------------------------------------------
 const readHTML = require('../readHTML.js');
@@ -34,7 +33,7 @@ router.get('/', function(request, response)
         htmlLoggedinMenuJS = readHTML('./masterframe/loggedinmenu_js.html');
         response.write(htmlLoggedinMenuJS);
         
-        response.write(pug_loggedinmenu({
+        response.write(renderLoggedinMenu({
             employeecode: request.cookies.employeecode,
             name: request.cookies.name,
             logintimes: request.cookies.logintimes,
@@ -71,14 +70,13 @@ router.get('/:infotext', function(request, response)
         htmlLoggedinMenuJS = readHTML('./masterframe/loggedinmenu_js.html');
         response.write(htmlLoggedinMenuJS);
         
-        response.write(pug_loggedinmenu({
+        response.write(renderLoggedinMenu({
             employeecode: request.cookies.employeecode,
             name: request.cookies.name,
             logintimes: request.cookies.logintimes,
             lastlogin: request.cookies.lastlogin,
             securityaccesslevel: request.session.securityAccessLevel,
             webaddress : config.webaddress,
-            
         }));
     }
 

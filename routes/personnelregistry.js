@@ -7,7 +7,7 @@ const path = require('path');
 
 const pug = require('pug');
 const { response } = require('express');
-const pug_loggedinmenu = pug.compileFile('./masterframe/loggedinmenu.html');
+const renderLoggedinMenu = require('../renderLoggedinMenu');
 
 // --------------------- Läs in Masterframen --------------------------------
 const readHTML = require('../readHTML.js');
@@ -41,7 +41,7 @@ router.get('/', (request, response) =>
             response.write(htmlLoggedinMenuJS);
             //htmlLoggedinMenu = readHTML('./masterframe/loggedinmenu.html');
             //response.write(htmlLoggedinMenu);
-            response.write(pug_loggedinmenu({
+                        response.write(renderLoggedinMenu({
                 employeecode: request.cookies.employeecode,
                 name: request.cookies.name,
                 logintimes: request.cookies.logintimes,
@@ -147,14 +147,14 @@ router.get('/:employeeid', function(request, response)
             response.write(htmlLoggedinMenuJS);
             //htmlLoggedinMenu = readHTML('./masterframe/loggedinmenu.html');
             //response.write(htmlLoggedinMenu);
-            response.write(pug_loggedinmenu({
-                employeecode: request.cookies.employeecode,
-                name: request.cookies.name,
-                logintimes: request.cookies.logintimes,
-                lastlogin: request.cookies.lastlogin,
-                securityaccesslevel: request.session.securityAccessLevel,
-                webaddress : config.webaddress,
-              }));
+                        response.write(renderLoggedinMenu({
+                                employeecode: request.cookies.employeecode,
+                                name: request.cookies.name,
+                                logintimes: request.cookies.logintimes,
+                                lastlogin: request.cookies.lastlogin,
+                                securityaccesslevel: request.session.securityAccessLevel,
+                                webaddress : config.webaddress,
+                            }));
         }
         response.write(htmlHeader);
         response.write(htmlMenu);
