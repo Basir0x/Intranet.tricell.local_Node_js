@@ -1,4 +1,4 @@
-const express = require('express');
+﻿const express = require('express');
 const router = express.Router();
 
 const path = require('path');
@@ -41,7 +41,7 @@ function writeCommonHeader(req, res) {
       logintimes: req.cookies.logintimes,
       lastlogin: req.cookies.lastlogin,
       securityaccesslevel: req.session.securityAccessLevel || 'C',
-      webaddress: 'http://djinn.tricell.local',
+      webaddress: 'http://cephalo.tricell.local',
     }));
   }
   res.write(htmlHeader);
@@ -188,3 +188,4 @@ router.get('/:id', async (req, res) => {
 });
 
 module.exports = router;
+

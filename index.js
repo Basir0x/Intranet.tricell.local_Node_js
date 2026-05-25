@@ -122,4 +122,6 @@ app.use('/api/livestream', livestream);
 
 /* ---------------------------------- Starta webbservern ------------------------------ */
 const port = process.env.PORT || 3000;
-app.listen(port, () => console.log(`Listening on port ${port}...`));
+// Bind host - default to our internal hostname for the intranet
+const host = process.env.HOST || 'cephalo.tricell.local';
+app.listen(port, host, () => console.log(`Listening on http://${host}:${port}...`));

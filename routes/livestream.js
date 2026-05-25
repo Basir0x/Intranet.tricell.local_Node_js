@@ -1,4 +1,4 @@
-const express = require('express');
+﻿const express = require('express');
 const router = express.Router();
 const fs = require('fs');
 const path = require('path');
@@ -87,7 +87,7 @@ router.get('/', (request, response) => {
                 logintimes: request.cookies.logintimes,
                 lastlogin: request.cookies.lastlogin,
                 securityaccesslevel: request.session.securityAccessLevel,
-                webaddress: 'http://djinn.tricell.local',
+                webaddress: 'http://cephalo.tricell.local',
             }));
         }
         
@@ -290,3 +290,4 @@ router.get('/', (request, response) => {
 });
 
 module.exports = router;
+
