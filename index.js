@@ -122,6 +122,6 @@ app.use('/api/livestream', livestream);
 
 /* ---------------------------------- Starta webbservern ------------------------------ */
 const port = process.env.PORT || 3000;
-// Bind host - default to our internal hostname for the intranet
-const host = process.env.HOST || 'cephalo.tricell.local';
+// Bind host - default to localhost when the intranet hostname is not available
+const host = process.env.HOST || 'localhost';
 app.listen(port, host, () => console.log(`Listening on http://${host}:${port}...`));
